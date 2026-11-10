@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CatalogCallout, Eyebrow, LeadActions, Photo } from "../components/editorial";
+import { ParallaxHero } from "../components/parallax-hero";
 import { CollectionCard } from "../components/collection-card";
 import { CatalogButton } from "../components/inquiry-form";
 import { Icon } from "../components/icons";
@@ -10,21 +11,19 @@ export default function Home() {
 
   return (
     <>
-      <section className="shell home-hero">
-        <div className="hero-copy">
+      <ParallaxHero />
+      <section className="shell hero-introduction" id="hero-introduction">
+        <div>
           <Eyebrow>Folia · Hospitality design &amp; supply</Eyebrow>
-          <h1>Custom menus.<br /><em>Considered details.</em></h1>
+          <h2>Custom menus.<br /><em>Considered details.</em></h2>
+        </div>
+        <div className="hero-introduction-copy">
           <p>Menu covers, hospitality essentials, and digital experiences, designed around your restaurant, hotel, or café.</p>
           <div className="actions">
             <Link href="/products" className="button button-primary">Explore the collections <Icon name="arrow" width="18" height="18" /></Link>
             <a href={whatsappUrl("Hello Folia, I’d like to talk about my venue.")} className="text-link" target="_blank" rel="noreferrer">Talk to the studio <Icon name="whatsapp" width="18" height="18" /></a>
           </div>
-          <div className="hero-footnote"><span>Made around your identity.</span><span>From the first page to the final touch.</span></div>
         </div>
-        <figure className="hero-visual">
-          <Photo image={editorial.hero} className="hero-photo" priority sizes="(max-width: 760px) 100vw, 58vw" />
-          <figcaption><span>The Folia collection</span><span>Materials. Presentation. Character.</span></figcaption>
-        </figure>
       </section>
 
       <section className="shell studio-intro">

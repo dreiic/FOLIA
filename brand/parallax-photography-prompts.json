@@ -1,0 +1,23 @@
+[
+  {
+    "layer": "background",
+    "prompt": "Use case: photorealistic-natural. Generate a NEW premium restaurant interior photograph for Folia hospitality design studio. The first reference is the Folia brand logo, for the oxblood burgundy palette only. The second reference provides the natural walnut, burgundy leather, cream plaster and editorial photographic atmosphere. One coherent boutique European restaurant photographed before service, no people. Seated eye-level camera, very slightly tilted down, 35 mm lens, natural late afternoon light from the left. Warm walnut joinery, deep burgundy leather banquettes along the sides, ivory plaster arches, discreet warm brass lamps, a few fully plausible distant dining tables. Keep the middle center of the scene calm and dark enough for a large white wordmark overlay: warm dark walnut or burgundy wall, not a bright window. Place furniture mainly in the back half and side margins, leave the lower third as an unoccupied dark floor area for a separate foreground table layer that will be composited later. No close-up table in foreground, no large foreground objects. Frame as a wide landscape 3:2 image at highest available native quality. Rich, sharp, authentic natural materials, subtle real-world irregularities, elegant warm lighting, no excessive artificial blur. No embedded text, logos, signage, watermarks, mountain, landscape, people, glossy synthetic surfaces or flashy lighting.",
+    "output": "public/parallax/restaurant-background.webp",
+    "tool": "image_gen.imagegen",
+    "nativeDimensions": "1536x1024"
+  },
+  {
+    "layer": "middle",
+    "prompt": "Use case: product-mockup. Create a transparent foreground photographic layer to composite over the first reference restaurant scene. The reference is for matching warm afternoon lighting and perspective only. Output a landscape 3:2 canvas. A single softly folded natural ivory linen curtain hangs from the top edge along ONLY the far left 12 percent of the canvas, softly out of focus, trailing off beyond the bottom edge. It should feel like a nearby window curtain in this restaurant. Keep the entire remaining 88 percent of the canvas truly transparent, including the center. Do not paint the room, walls, floors, people, furniture, text, a solid background, or shadows on a background. Natural fine linen texture, thin subtle folds, warm reflected light matching the room, no artificial glow. This is one transparent image layer, not a composition on a white or checkered background.",
+    "output": "public/parallax/restaurant-middle.webp",
+    "tool": "image_gen.imagegen",
+    "nativeDimensions": "1536x1024"
+  },
+  {
+    "layer": "foreground",
+    "prompt": "Use case: product-mockup. Generate an isolated foreground dining table layer for the FIRST reference restaurant scene, matching its exact warm natural late-afternoon light from the left, walnut furniture, and eye-level camera looking slightly downward. The SECOND reference provides the exact Folia wordmark only. Output a landscape 3:2 canvas with TRUE TRANSPARENCY. Leave the UPPER 62 percent of the canvas entirely transparent. Only the bottom 38 percent contains a near walnut dining tabletop, its front edge cropped by the bottom of the frame. On the table put one fully visible closed oxblood burgundy leather menu cover near horizontal center in the lower quarter, complete within frame with generous margins, a small exact understated Folia debossed wordmark on its face. Add a single clear wine glass on the right with realistic reflections and a small folded ivory linen napkin on the left. No food, no money, no hands, no people. The tabletop may extend past the side edges, but the menu, glass, and napkin are entirely inside the frame. Perspective must match the photographed reference room: near table at the camera, the room recedes behind it. Preserve a fully transparent empty center area for a separate white logo overlay. Do not include any restaurant room, chairs, ceiling, wall, window, floor or background. Only the isolated table and its objects with clean natural alpha edges. No white background, no checkerboard pattern painted into pixels, no backdrop shadows, no floating objects, no extra typography.",
+    "output": "public/parallax/restaurant-foreground.webp",
+    "tool": "image_gen.imagegen",
+    "nativeDimensions": "1536x1024"
+  }
+]

@@ -31,3 +31,7 @@ The supplied wordmark is retained as a transparent mask in `public/editorial/fol
 `npm run build:sites` produces prerendered pages in `dist/client` and a Worker at `dist/server/index.js`. Site identity is preserved in `.openai/hosting.json`.
 
 The existing `POST /api/inquiry` integration remains available for future server-side email delivery. Its optional settings are in `.env.example`. The current visitor flow uses direct WhatsApp and email links.
+
+## Parallax hero
+
+The homepage hero uses three coordinated generated restaurant layers in `public/parallax/` (warm interior, linen curtain, and a foreground table with a burgundy Folia menu), with the original Folia wordmark as the center layer. Prompts are recorded in `brand/parallax-photography-prompts.json`. The implementation is in `components/parallax-hero.tsx`. GSAP ScrollTrigger drives the four layer speeds and Lenis smooths desktop wheel scrolling. Mobile uses a gentler motion range. Reduced-motion preferences keep the scene static. The timeline, ticker callback, and scrolling instance are cleaned up when the hero unmounts.

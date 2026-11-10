@@ -67,13 +67,6 @@ svg { flex-shrink: 0; }
 .dropdown-links a:hover { color: var(--red); text-decoration: underline; text-underline-offset: 4px; }
 .dropdown-service { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-inline: -27px; background: var(--beige); color: var(--red); padding: 18px 27px; font-size: 12px; font-weight: 700; }
 
-.home-hero { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr); align-items: center; gap: clamp(28px, 5vw, 80px); padding-top: clamp(35px, 4.2vw, 68px); padding-bottom: clamp(35px, 4.2vw, 65px); }
-.hero-copy h1 { margin-top: 24px; font-size: clamp(62px, 6.2vw, 94px); }
-.hero-copy > p:not(.eyebrow) { font-size: 16px; max-width: 39ch; margin-top: 24px; line-height: 1.85; }
-.hero-copy .actions { margin-top: 27px; }
-.hero-photo { aspect-ratio: 4 / 3; }
-.hero-visual figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 13px; color: var(--muted); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
-.hero-footnote { display: flex; flex-direction: column; gap: 1px; font-size: 10px; color: #807168; margin-top: 35px; letter-spacing: .025em; }
 .studio-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 11vw, 165px); padding-block: clamp(53px, 6.5vw, 100px); border-top: 1px solid var(--line); }
 .studio-intro h2 { margin-top: 12px; }
 .studio-intro > div > p:not(.eyebrow) { max-width: 51ch; }
@@ -247,20 +240,10 @@ svg { flex-shrink: 0; }
 
 @media (max-width: 1100px) {
   .main-nav { gap: 27px; }
-  .home-hero { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 30px; }
-  .hero-copy h1 { font-size: 68px; }
-  .hero-copy .actions { gap: 8px 18px; }
-  .hero-footnote { margin-top: 20px; }
   .footer-main { gap: 25px; }
   .contact-methods.is-compact { column-gap: 18px; }
 }
 @media (max-width: 900px) {
-  .home-hero { grid-template-columns: 1fr 1fr; }
-  .hero-copy h1 { font-size: 59px; }
-  .hero-copy > p:not(.eyebrow) { font-size: 14px; }
-  .hero-copy .eyebrow { font-size: 9px; }
-  .hero-footnote { display: none; }
-  .hero-visual figcaption span:last-child { display: none; }
   .collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .collection-section .collection-card:last-child { grid-column: 1 / -1; }
   .collection-section .collection-card:last-child .collection-card-link { display: grid; grid-template-columns: 1fr 1fr; gap: 0 25px; }
@@ -297,12 +280,6 @@ svg { flex-shrink: 0; }
   .dropdown-links { gap: 0 18px; }
   .dropdown-links a { font-size: 12px; line-height: 1.5; min-height: 43px; }
   .dropdown-service { margin-inline: -15px; padding: 14px 15px; font-size: 11px; }
-  .home-hero { grid-template-columns: 1fr; padding-top: 34px; gap: 28px; }
-  .hero-copy h1 { font-size: clamp(64px, 10.5vw, 82px); margin-top: 16px; }
-  .hero-copy > p:not(.eyebrow) { font-size: 15px; margin-top: 18px; max-width: 43ch; }
-  .hero-copy .actions { margin-top: 19px; }
-  .hero-photo { aspect-ratio: 3 / 2; }
-  .hero-visual figcaption span:last-child { display: block; font-size: 8px; }
   .studio-intro { grid-template-columns: 1fr; gap: 24px; }
   .studio-intro > div > p:not(.eyebrow) { max-width: 60ch; font-size: 14px; }
   .section-heading { align-items: start; }
@@ -346,10 +323,6 @@ svg { flex-shrink: 0; }
 }
 @media (max-width: 520px) {
   h2 { font-size: 45px; }
-  .hero-copy h1 { font-size: 65px; }
-  .hero-copy .actions { gap: 8px 18px; }
-  .hero-visual figcaption { font-size: 8px; }
-  .hero-visual figcaption span:last-child { display: none; }
   .section-heading { display: block; margin-bottom: 25px; }
   .section-heading > .text-link { margin-top: 12px; }
   .section-heading > p { margin-top: 17px; }
@@ -390,7 +363,6 @@ svg { flex-shrink: 0; }
   .about-setting-note { padding-inline: var(--pad); }
 }
 @media (max-width: 350px) {
-  .hero-copy h1 { font-size: 57px; }
   .contact-copy h1, .collection-hero h1 { font-size: 51px; }
   .contact-methods.is-compact { grid-template-columns: 1fr; }
   .contact-methods.is-compact li:first-child { grid-column: auto; }
@@ -398,3 +370,34 @@ svg { flex-shrink: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+html.lenis:has(dialog[open]), html.lenis:has(.main-nav.is-open) { overflow: hidden; }
+.parallax { position: relative; height: calc(100svh - 88px); min-height: 560px; overflow: clip; background: #2b1813; color: var(--white); }
+.parallax__visuals, .parallax__layers { position: absolute; inset: 0; overflow: clip; }
+.parallax__layer-img { object-fit: cover; object-position: 50% 50%; pointer-events: none; user-select: none; will-change: transform; }
+.parallax__layer-title { position: absolute; inset: 0; display: grid; place-items: center; padding-bottom: 10%; will-change: transform; }
+.parallax__title { margin: 0; line-height: 1; }
+.parallax__logo { display: block; width: clamp(250px, 35vw, 520px); aspect-ratio: 840 / 374; background: currentColor; mask: url("/editorial/folia-wordmark.png") center / contain no-repeat; }
+.parallax__fade { position: absolute; pointer-events: none; inset: 65% 0 0; background: linear-gradient(180deg, transparent, rgb(26 13 9 / 65%)); }
+.parallax__caption { position: absolute; bottom: 30px; left: 22px; right: 22px; display: grid; justify-items: center; gap: 11px; text-align: center; }
+.parallax__caption p { color: #f1e9dd; font-size: 10px; font-weight: 650; text-transform: uppercase; letter-spacing: .23em; }
+.parallax__caption a { display: inline-flex; gap: 9px; align-items: center; min-height: 44px; font-size: 11px; color: #f1e9dd; }
+.parallax__caption a svg { transform: rotate(90deg); }
+.hero-introduction { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(30px, 8vw, 120px); padding-block: clamp(45px, 6vw, 90px); }
+.hero-introduction h2 { margin-top: 14px; font-size: clamp(46px, 4.5vw, 70px); }
+.hero-introduction h2 em { color: var(--red); font-weight: 400; }
+.hero-introduction-copy > p { max-width: 44ch; font-size: 15px; }
+.hero-introduction-copy .actions { margin-top: 22px; }
+@media (max-width: 760px) {
+  .parallax { height: calc(100svh - 71px); min-height: 480px; }
+  .parallax__layer-title { padding-bottom: 20%; }
+  .parallax__logo { width: clamp(220px, 63vw, 390px); }
+  .parallax__caption { bottom: 19px; }
+  .parallax__caption p { font-size: 8px; letter-spacing: .18em; }
+  .hero-introduction { grid-template-columns: 1fr; gap: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parallax__layer-img, .parallax__layer-title { will-change: auto; }
+}
+
