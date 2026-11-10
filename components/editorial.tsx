@@ -1,15 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { catalogPath } from "../lib/content";
+import { emailUrl, whatsappUrl } from "../lib/content";
 import { CatalogButton } from "./inquiry-form";
+import { Icon } from "./icons";
 
 export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.35">
-      {diagonal ? <path d="M6 18 18 6M6 6h12v12" /> : <path d="M3 12h17m-7-7 7 7-7 7" />}
-    </svg>
-  );
+  return <Icon name="arrow" width="18" height="18" style={diagonal ? { transform: "rotate(-45deg)" } : undefined} />;
 }
 
 export function Eyebrow({ children }: { children: ReactNode }) {
@@ -24,24 +21,41 @@ export function Photo({ image, className = "", priority = false, sizes = "(max-w
 }) {
   return (
     <div className={`photo ${className}`}>
-      <Image src={image.src} alt={image.alt} fill sizes={sizes} fetchPriority={priority ? "high" : "auto"} loading={priority ? "eager" : "lazy"} />
+      <Image src={image.src} alt={image.alt} fill sizes={sizes}
+        fetchPriority={priority ? "high" : "auto"} loading={priority ? "eager" : "lazy"} />
     </div>
   );
 }
 
-export function CatalogCallout({ productPage = false }: { productPage?: boolean }) {
+export function LeadActions({ topic, className = "" }: { topic?: string; className?: string }) {
+  const message = topic
+    ? `Hello Folia, I’m interested in ${topic.toLowerCase()}. Could you share more about the options for my venue?`
+    : "Hello Folia, I’d like to discuss a hospitality project.";
+  return (
+    <div className={`actions ${className}`}>
+      <a href={whatsappUrl(message)} className="button button-primary" target="_blank" rel="noreferrer">
+        <Icon name="whatsapp" width="18" height="18" /> Talk on WhatsApp
+      </a>
+      <a href={emailUrl(topic ? `Folia | ${topic}` : "Folia | Project inquiry", message)} className="text-link">
+        Email the studio <Icon name="mail" width="17" height="17" />
+      </a>
+    </div>
+  );
+}
+
+export function CatalogCallout() {
   return (
     <section className="catalog-callout">
       <div className="shell catalog-inner">
-        <Eyebrow>Discover our collection</Eyebrow>
-        <h2>Find the Perfect <em>Finishing Touch.</em></h2>
-        <p>Explore our selection of customizable hospitality products, materials, colors, and finishes. Request our catalog to discover what we can create for your space.</p>
-        <div className="actions">
-          <CatalogButton className="button button-primary">
-            {productPage ? "Request Full Catalog" : "Request Our Catalog"} <Arrow diagonal />
-          </CatalogButton>
-          <a href={catalogPath} className="text-link" download>Download PDF <span aria-hidden="true">↓</span></a>
-          <Link href="/contact" className="text-link">Contact Us <Arrow /></Link>
+        <div>
+          <Eyebrow>Let’s find the right details.</Eyebrow>
+          <h2>Your space.<br />Your way.</h2>
+        </div>
+        <div className="catalog-copy">
+          <p>Tell us about your venue and what you have in mind. We’ll share the catalog, help you explore materials, and put together a proposal around your needs.</p>
+          <LeadActions />
+          <CatalogButton className="text-link catalog-secondary">Ask for the collection catalog <Arrow /></CatalogButton>
+          <Link href="/contact" className="catalog-contact-link">All contact details</Link>
         </div>
       </div>
     </section>

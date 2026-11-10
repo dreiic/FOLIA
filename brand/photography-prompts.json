@@ -1,0 +1,146 @@
+[
+  {
+    "name": "hero",
+    "asset": "/photography/hero.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A Folia menu and bill presenter on a walnut restaurant table",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A single oxblood leather restaurant menu, softly open with a few ivory menu sheets, and a slim matching bill presenter on a real aged dark walnut restaurant table. One empty wine glass at the upper edge, folded off-white linen at left. A warm restaurant banquette recedes naturally in the background. The menu carries one tiny blind-debossed Folia wordmark. Intimate evening window light, authentic tactile grain, candid but carefully composed, focal plane sharp across the menu. Keep complete menu inside central 70 percent. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "menu-covers",
+    "asset": "/photography/menu-covers.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Burgundy leather and woven linen menu covers",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. Two fully visible closed menu covers, one deep burgundy leather and one warm oatmeal woven linen, arranged on a café table with one ivory paper insert resting nearby. Only the burgundy menu has the small subtle blind-debossed Folia logo. Quiet window light, realistic seams and leather grain, cool pale limestone and warm wood background. An overhead three-quarter composition. Main objects fully contained with 15 percent clear margins. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "hotel-guest-folders",
+    "asset": "/photography/hotel-guest-folders.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "An open guest information folder in a boutique hotel",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. An open deep burgundy leather guest information folder on a pale oak console in a boutique hotel room. One insert with understated heading 'Welcome', a hotel key card tucked into the interior pocket, folded natural linen and a softly out-of-focus curtain beyond. Small Folia wordmark blind-debossed on pocket. The entire folder including both covers fully visible with breathing room, natural morning light, precise material detail. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "restaurant-accessories",
+    "asset": "/photography/restaurant-accessories.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A leather bill presenter, server notebook, and reserved table sign",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A slim oxblood leather bill presenter, a discreet wooden reserved table sign with ivory face, and a charcoal server notebook on a bistro table. A small Folia wordmark subtly embossed on the bill presenter, realistic thin construction and squared edges. Finely textured table linen and a single stainless steel spoon, soft side lighting, medium-distance composition with all three products complete and centered with generous margins. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "digital-menus",
+    "asset": "/photography/digital-menus.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A branded digital menu on a phone beside a burgundy QR stand",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A beautiful true-to-life hospitality still life. A contemporary dark smartphone resting upright at a slight angle on a real café table beside a small burgundy leather QR menu stand. The phone screen is clean ivory with burgundy fine typography, tiny Folia wordmark, heading 'The Menu', three clearly separated editorial dishes, no prices. The QR stand shows a restrained illustrative QR pattern. Proper physically plausible phone proportions, no 3D floating device. All objects fit entirely in central 70 percent. Natural soft daylight, wood, linen and faint cafe background. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "menu-holders",
+    "asset": "/photography/menu-holders.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Acrylic and wooden tabletop menu holders",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. Three carefully crafted restaurant tabletop menu displays on a warm oak service counter: a clear acrylic holder on a walnut base containing an ivory card with heading 'Today', a simple dark oak clip stand, and a folded burgundy table tent with small Folia wordmark. Three different formats, full objects uncropped, no duplicates. Soft daylight, subtle reflections, authentic hospitality surroundings softly out of focus. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "menu-boards",
+    "asset": "/photography/menu-boards.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Walnut and leather-faced handheld menu boards",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A beautifully tactile walnut handheld menu clipboard with a small brass clip holding a thick ivory menu sheet, next to a flat burgundy leather-faced menu board with discreet Folia blind-debossing. Both boards fully visible, angled on a neutral café stone counter with 15 percent framing margins. Small fine typography on insert, no prices. Honest wood grain, hand-finished edges, soft directional light. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "wall-menu-boards",
+    "asset": "/photography/wall-menu-boards.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "An oak rail wall menu in a café",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A believable small European café interior detail: a wall-mounted menu made with horizontal natural oak rails and individual ivory letter tiles, headings 'COFFEE' and 'TEA' with just a few simple items and no prices. Cream plaster wall, warm burgundy painted door edge, espresso counter visible low in frame. Main wall display entirely visible with appropriate blank margin. Real interior photography, natural side light, crisp oak and tile details, no distorted or nonsense extra text. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "table-service",
+    "asset": "/photography/table-service.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Coordinated serving boards, placemats, and tabletop accessories",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A relaxed high-end restaurant tabletop detail featuring an oval walnut serving board, burgundy leather placemat and two matching round coasters, a refined linen napkin holder and a neat leather cutlery sleeve. Small subtle Folia wordmark only on coaster. Products presented in a believable table setting, no food, not crowded, no extra repeated utensils, all accessories visible, medium distance with air around edges. Soft overcast daylight and natural shadows. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "signage",
+    "asset": "/photography/signage.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Burgundy room and directional signs beside an oak hotel door",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A close but not cropped architectural photograph of a boutique hotel corridor. A refined matte burgundy rectangular room plaque with brass numerals '204' mounted on warm light plaster beside an oak door, a small matching directional plaque with a simple arrow and 'Rooms'. No hotel or client logos. Full plaques visible within frame, slightly textured plaster, realistic joinery, soft natural corridor lighting. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "menu-inserts",
+    "asset": "/photography/menu-inserts.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Ivory menu inserts and protective sleeves beside a folder",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. Editorial overhead photograph of hospitality menu design work: three neatly arranged thick ivory printed menu sheets with restrained dark burgundy typesetting and clear headings, two transparent protective menu sleeves, and an open burgundy ring-bound folder at edge. The sheets are complete within frame, readable large heading 'The Menu', no prices or real restaurant names. Natural table surface, soft daylight, precise paper fibers, no hands, no scissors, no fake design software. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "product-sets",
+    "asset": "/photography/product-sets.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A coordinated burgundy hospitality presentation set",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A coordinated Folia hospitality presentation set on a dark oak restaurant table: one burgundy leather menu cover, slim matching bill presenter, small standing QR sign, and two leather coasters, all visibly different items and each fully within frame. Tiny subtle Folia wordmark on menu and one coaster, no other logos. Elegant restrained visual order, realistic scale across objects, directional afternoon light. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "samples",
+    "asset": "/photography/samples.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Leather, linen, felt, and wood material samples",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A photographer's close still life of real hospitality material samples: rich oxblood fine-grained leather, cognac leather, oat woven fabric, charcoal felt, pale oak and walnut finish samples, loosely arranged on cream worktable beside a small burgundy Folia sample folder. Material texture sharply resolved, believable thin samples with clean edges. More informal than a catalog swatch grid, soft raking natural light, all primary sample pieces fit frame. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "design-process",
+    "asset": "/photography/design-process.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "Reviewing menu layouts and material samples in the studio",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. A designer's hands reviewing the page layout of a restaurant menu on ivory paper beside a burgundy leather menu cover and a few loose material swatches on an oak studio desk. Realistic hands, clean subtle Folia wordmark on the cover, natural irregular paper stacks, gently lit by a large window. No faces, no manufacturing machinery. A candid, observational design studio photograph, entire main menu cover visible. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "hospitality-background",
+    "asset": "/photography/hospitality-background.webp",
+    "width": 1774,
+    "height": 887,
+    "alt": "A warm restaurant interior with walnut tables and burgundy seating",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. Atmospheric architectural photograph of a quiet intimate European restaurant before service, warm walnut tables and burgundy leather banquettes, ivory plaster, tall window daylight, simple clear wine glasses, one small deep burgundy Folia menu at a table. Believable natural proportions and lived-in fine texture. Broad horizontal view, gentle subdued tones with enough shadow for a short white heading overlay. No people, no signage, no added text. Wide 2:1. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  },
+  {
+    "name": "web-design",
+    "asset": "/photography/web-design.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A hospitality website displayed on a laptop and phone",
+    "prompt": "Use case: product-mockup. Create one high-resolution editorial product photograph for Folia hospitality design studio. The first reference is the exact Folia wordmark. The second reference supplies the burgundy leather, warm light, and tactile brand mood only. Create a NEW scene, not an enlargement or crop of either reference. Refined hospitality web design photograph: a real slim laptop on an oak hotel reception desk, its screen showing a beautifully restrained boutique hotel website with ivory background, burgundy wordmark 'Folia', a large architectural hotel photograph and simple navigation. A phone beside it shows the same calm responsive website. Exact plausible device proportions, no floating UI, no neon, a burgundy leather folder partly visible beside the computer. Natural window light and realistic glass reflections, full devices centered with 15 percent margin. Landscape 3:2. Output requested at 3072 by 2048 pixels, except the wide interior at 3072 by 1536. Sharp, high-fidelity natural material detail, subtly irregular surfaces, realistic lenses and lighting. No captions, slogans, watermarks, mockup borders, decorative graphics, artificial glow, visual gradients, overly perfect synthetic texture, or exaggerated bokeh. Leave enough space around products for alternate website crops. When visible, the Folia wordmark must match the first reference, small and understated.",
+    "tool": "Built-in image generation"
+  }
+]

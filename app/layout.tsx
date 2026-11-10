@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "FOLIA",
-    images: [{ url: "/editorial/folia-02.webp", alt: "Folia oxblood leather menu cover" }],
+    images: [{ url: "/photography/hero.webp", alt: "Folia hospitality presentation" }],
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_FOLIA_SITE_URL || "https://folia-hospitality-studio.downyhinny16.chatgpt.site"),
   icons: { icon: "/editorial/folia-icon.png" },

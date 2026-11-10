@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
-import { CatalogDirectory } from "../../components/catalog-directory";
-import { Arrow, CatalogCallout, Eyebrow } from "../../components/editorial";
+import { collections } from "../../lib/content";
+import { CollectionCard } from "../../components/collection-card";
+import { CatalogCallout, Eyebrow } from "../../components/editorial";
 import { CatalogButton } from "../../components/inquiry-form";
-import { catalogPath } from "../../lib/content";
+import { Icon } from "../../components/icons";
 
 export const metadata: Metadata = {
-  title: "Our Collections",
-  description: "Explore Folia’s menu covers, presentation boards, tableware, signs, guest folders, and QR and NFC solutions for hospitality.",
+  title: "Hospitality Collections",
+  description: "Discover custom menu covers, guest folders, tabletop accessories, signs, and digital menus. Explore each Folia collection and discuss your project with us.",
 };
 
 export default function Products() {
   return (
     <>
-      <section className="shell page-heading">
-        <Eyebrow>Folia / The collections</Eyebrow>
-        <h1>Our <em>Collections.</em></h1>
-        <p>A considered selection of customizable essentials for restaurants, hotels, and hospitality spaces.</p>
-        <div className="actions">
-          <CatalogButton className="button button-primary">Request Full Catalog <Arrow diagonal /></CatalogButton>
-          <a href={catalogPath} className="text-link" download>Download PDF <span aria-hidden="true">↓</span></a>
+      <section className="shell page-heading collections-heading">
+        <div><Eyebrow>The Folia collections</Eyebrow><h1>For the table.<br />For the whole experience.</h1></div>
+        <div><p>Presentation essentials for restaurants, hotels, bars, and cafés. Explore a collection, then let’s make it yours.</p><CatalogButton className="text-link">Request the catalog <Icon name="arrow" /></CatalogButton></div>
+      </section>
+      <section className="shell collection-overview" aria-label="Product collections">
+        <div className="collection-grid">
+          {collections.map((collection, index) => <CollectionCard key={collection.id} collection={collection} priority={index < 3} />)}
         </div>
       </section>
-      <CatalogDirectory />
-      <CatalogCallout productPage />
+      <CatalogCallout />
     </>
   );
 }

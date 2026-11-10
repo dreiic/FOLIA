@@ -1,30 +1,33 @@
 import type { Metadata } from "next";
-import { Eyebrow } from "../../components/editorial";
-import { InquiryForm } from "../../components/inquiry-form";
-import { ContactDetails } from "../../components/site-chrome";
+import { ContactDetails } from "../../components/contact-details";
+import { Eyebrow, Photo } from "../../components/editorial";
+import { ProjectInquiry } from "../../components/project-inquiry";
+import { editorial } from "../../lib/content";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Folia to request a catalog or talk about a hospitality design project.",
+  title: "Contact the Studio",
+  description: "Talk to Folia in Podgorica about custom menus, hospitality presentation, QR menus, or a website for your venue. Contact us by WhatsApp, telephone, SMS, or email.",
 };
 
 export default function Contact() {
   return (
-    <section className="shell contact-page">
-      <div className="contact-copy">
-        <Eyebrow>Folia / Contact</Eyebrow>
-        <h1>Let’s Create<br /><em>Something Together.</em></h1>
-        <p>Whether you’re exploring our collection or have a specific project in mind, we’d love to hear about it.</p>
-        <div className="contact-details">
-          <Eyebrow>Studio details</Eyebrow>
+    <>
+      <section className="shell contact-page">
+        <div className="contact-copy">
+          <Eyebrow>Let’s talk about your space.</Eyebrow>
+          <h1>A good project<br />starts with<br /><em>a conversation.</em></h1>
+          <p>A new opening, a menu refresh, or a detail you’ve been thinking about. Tell us where you’d like to begin.</p>
           <ContactDetails />
         </div>
-      </div>
-      <div className="contact-panel" id="inquiry">
-        <Eyebrow>Project inquiries</Eyebrow>
-        <h2>Tell us what you have in mind.</h2>
-        <InquiryForm mode="contact" />
-      </div>
-    </section>
+        <div className="contact-panel">
+          <Photo image={editorial.process} className="contact-photo" priority />
+          <div className="contact-panel-copy">
+            <Eyebrow>Your project</Eyebrow>
+            <h2>What do you have in mind?</h2>
+            <ProjectInquiry />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
