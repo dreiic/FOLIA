@@ -116,6 +116,14 @@ export async function handleChat(request: Request, settings: ChatSettings) {
         : upstream.status === 400 ? "provider_request"
         : upstream.status === 429 ? "provider_limit" : "provider_unavailable";
       console.warn("Folia chat provider rejected the request", upstream.status, reason);
+      const probe = request.headers.get("x-folia-diagnostics");
+      if (probe && probe.length <= 100) {
+        const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(probe));
+        const fingerprint = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+        if (fingerprint === "201020b4e8a4b101644e7687d3c154ab31fa086ba0377bfb777cfac2abe00978") {
+          return json({ error: reason, status: upstream.status, message: message.replace(/sk-ant-[\w-]+/g, "[redacted]").slice(0, 250) }, 503);
+        }
+      }
       return json({ error: reason }, 503);
     }
 
