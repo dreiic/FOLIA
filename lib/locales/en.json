@@ -148,8 +148,9 @@
   "notFound": "Page not found",
   "backHome": "Back to the homepage",
   "websiteDesign": "Website design",
-  "quoteTitle": "Need a tailored quote?",
-  "quoteBody": "Tell us what you need and we’ll put together a quote for your venue.",
-  "quoteAction": "Request a quote",
-  "quoteDismiss": "Dismiss quote reminder"
+  "quoteTitle": "Fitting out your venue or refreshing your menu?",
+  "quoteBody": "Tell us what you need. We’ll suggest options and put together a quote for your venue.",
+  "quoteAction": "Get a quote on WhatsApp",
+  "quoteDismiss": "Dismiss quote reminder",
+  "quoteMessage": "Hi! I’d like a quote for my venue. Could you help me choose the right options?"
 }

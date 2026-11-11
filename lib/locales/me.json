@@ -148,8 +148,9 @@
   "notFound": "Stranica nije pronađena",
   "backHome": "Nazad na početnu",
   "websiteDesign": "Izrada sajta",
-  "quoteTitle": "Ponuda po mjeri?",
-  "quoteBody": "Recite nam šta vam treba. Pripremićemo ponudu za vaš objekat.",
-  "quoteAction": "Zatražite ponudu",
-  "quoteDismiss": "Zatvori podsjetnik za ponudu"
+  "quoteTitle": "Opremate lokal ili osvježavate jelovnik?",
+  "quoteBody": "Recite nam šta vam treba. Predložićemo opcije i pripremiti ponudu po mjeri.",
+  "quoteAction": "Zatražite ponudu na WhatsAppu",
+  "quoteDismiss": "Zatvori podsjetnik za ponudu",
+  "quoteMessage": "Zdravo! Zanima me ponuda za moj ugostiteljski objekat. Možete li mi pomoći oko izbora?"
 }

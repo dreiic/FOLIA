@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { Icon } from "./icons";
 
@@ -62,9 +61,10 @@ export function QuoteReminder({ isHome, href, title, body, action, dismissLabel 
           </button>
           <h2 id={id}>{title}</h2>
           <p>{body}</p>
-          <Link href={href} className="text-link" prefetch={false} onNavigate={dismiss}>
-            {action} <Icon name="arrow" width="16" height="16" />
-          </Link>
+          <a href={href} className="button button-primary quote-action" target="_blank" rel="noreferrer" onClick={dismiss}>
+            <Icon name="whatsapp" width="19" height="19" />
+            {action}
+          </a>
         </aside>
       )}
     </div>

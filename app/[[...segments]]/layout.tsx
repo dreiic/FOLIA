@@ -8,8 +8,9 @@ import "@fontsource-variable/manrope";
 import { CatalogProvider } from "../../components/inquiry-form";
 import { QuoteReminder } from "../../components/quote-reminder";
 import { Footer, Header } from "../../components/site-chrome";
+import { whatsappUrl } from "../../lib/content";
 import { getContent } from "../../lib/localized-content";
-import { locales, localizedPath, parseSegments } from "../../lib/routing";
+import { locales, parseSegments } from "../../lib/routing";
 import "../site.css";
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default async function RootLayout({ children, params }: {
             <QuoteReminder
               key={`${locale}:${path}`}
               isHome={path === "/"}
-              href={`${localizedPath(locale, "/contact")}#inquiry`}
+              href={whatsappUrl(t.quoteMessage)}
               title={t.quoteTitle}
               body={t.quoteBody}
               action={t.quoteAction}
