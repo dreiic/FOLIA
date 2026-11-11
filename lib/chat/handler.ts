@@ -27,7 +27,7 @@ const safeReply: Record<Locale, string> = {
 };
 
 const forbidden = /[€$£₽]|\b(?:eur|usd|gbp|rub|inko(?:horeca)?|inkohoreca|https?|www)\b|(?<=\d)\s*(?:euros?|eura|evra|евро|доллар\p{L}*)/iu;
-const model = "claude-haiku-5-5";
+const model = "claude-haiku-4-5-20251001";
 const maxBody = 28_000;
 
 function json(data: object, status = 200) {
@@ -94,7 +94,7 @@ export async function handleChat(request: Request, settings: ChatSettings) {
       method: "POST",
       headers: {
         "x-api-key": settings.ANTHROPIC_API_KEY,
-        "anthropic-version": "2026-10-21",
+        "anthropic-version": "2023-06-01",
         "content-type": "application/json",
       },
       signal: AbortSignal.timeout(20_000),
