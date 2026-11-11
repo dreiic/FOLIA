@@ -193,18 +193,3 @@ export const services = [
     image: editorial.website,
   },
 ];
-
-export const collectionFinishes: Record<string, string[]> = {
-  "menu-covers": ["Genuine leather", "Faux leather", "Woven fabric", "Wood & felt"],
-  "hotel-guest-folders": ["Leather & fabric", "Interior pockets", "Logo finishes", "Custom layouts"],
-  "restaurant-accessories": ["Leather", "Wood", "Felt", "Embossing & engraving"],
-  "digital-menus": ["Wood", "Plywood", "Acrylic", "QR & NFC"],
-  "menu-holders": ["Clear acrylic", "Wooden bases", "Magnets", "Clips & rings"],
-  "menu-boards": ["Wood", "Leather-faced boards", "Felt", "Metal fastenings"],
-  "wall-menu-boards": ["Oak rails", "Acrylic letters", "HDF letters", "Wood finishes"],
-  "table-service": ["Wood", "Leather", "Fabric", "Custom engraving"],
-  "signage": ["Wood & acrylic", "Room numbering", "Engraving & printing", "Lightbox options"],
-  "menu-inserts": ["Matte paper", "Glossy paper", "Protective sleeves", "Digital printing"],
-  "product-sets": ["Coordinated colors", "Matching materials", "Logo finishes", "Venue-specific sets"],
-  "samples": ["Leather", "Faux leather", "Fabric & felt", "Wood finishes"],
-};

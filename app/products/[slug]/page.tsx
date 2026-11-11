@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { collectionFinishes, collections, editorial } from "../../../lib/content";
-import { CatalogCallout, Eyebrow, LeadActions, Photo } from "../../../components/editorial";
+import { collections, editorial } from "../../../lib/content";
+import { Eyebrow, LeadActions, Photo } from "../../../components/editorial";
+import { collectionGuides } from "../../../lib/collection-guide";
 import { CollectionCard } from "../../../components/collection-card";
 import { CatalogButton } from "../../../components/inquiry-form";
 import { Icon } from "../../../components/icons";
@@ -29,7 +30,8 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
   const { slug } = await params;
   const collection = collections.find(({ id }) => id === slug);
   if (!collection) notFound();
-  const related = collections.filter(({ id }) => id !== slug).slice(0, 3);
+  const guide = collectionGuides[slug];
+  const related = guide.related.map((id) => collections.find((item) => item.id === id)!);
 
   return (
     <>
@@ -45,41 +47,49 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
         </div>
         <Photo image={collection.image} className="collection-hero-photo" priority />
       </section>
-      <section className="shell collection-options">
-        <div><Eyebrow>Explore the possibilities</Eyebrow><h2>Made around<br />your venue.</h2></div>
-        <div className="options-copy">
-          <p>{collection.short}</p>
-          <ul className="option-lines">{collection.examples.map((example) => <li key={example}><Icon name="arrow" width="17" height="17" />{example}</li>)}</ul>
-          <CatalogButton className="text-link">Ask for the full collection <Icon name="arrow" width="17" height="17" /></CatalogButton>
+      <section className="shell product-guide" aria-labelledby="product-guide-title">
+        <div className="product-guide-heading scroll-entrance">
+          <h2 id="product-guide-title">Options &amp; details</h2>
+          <ul className="product-guide-examples">
+            {collection.examples.map((example) => <li key={example}>{example}</li>)}
+          </ul>
+        </div>
+        <dl className="product-specifications">
+          {guide.options.map(({ label, description }) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{description}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+      <section className="burgundy-panel product-brief">
+        <div className="shell product-brief-inner">
+          <h2>Tell us what you need.</h2>
+          <div>
+            <p>{guide.brief}</p>
+            <LeadActions topic={collection.title} />
+            <CatalogButton className="text-link">Request the catalog <Icon name="arrow" width="17" height="17" /></CatalogButton>
+          </div>
         </div>
       </section>
-      {slug === "digital-menus" ? (
+      {slug === "digital-menus" && (
         <section className="digital-detail-band">
           <div className="shell split-section">
             <Photo image={editorial.website} className="landscape-photo" />
             <div className="split-copy">
-              <Eyebrow>From the table to your website</Eyebrow>
-              <h2>One identity.<br />Every touchpoint.</h2>
-              <p>Alongside custom QR menus, we design websites for hotels, restaurants, bars, and cafés. Bring your story, menu, and contact details into one consistent online experience.</p>
+              <Eyebrow>Websites for hospitality</Eyebrow>
+              <h2>Bring your menu to your website.</h2>
+              <p>Alongside custom QR menus, we design websites for hotels, restaurants, bars, and cafés, with your story, menu, and contact details in one place.</p>
               <LeadActions topic="Website design & digital menus" />
             </div>
           </div>
         </section>
-      ) : (
-        <section className="personalization-band">
-          <div className="shell personalization-inner">
-            <Eyebrow>Personalization</Eyebrow>
-            <h2>From your logo<br />to the finishing touch.</h2>
-            <p>We work with you on the design, layout, material, and finish. Tell us what you like about your current presentation and what you’d like to change.</p>
-            <div className="material-tags">{collectionFinishes[slug].map((material) => <span key={material}>{material}</span>)}</div>
-          </div>
-        </section>
       )}
       <section className="shell related-section">
-        <div className="section-heading"><div><Eyebrow>Complete the presentation</Eyebrow><h2>Made to work together.</h2></div><Link href="/products" className="text-link">All collections <Icon name="arrow" /></Link></div>
+        <div className="section-heading"><h2>Related collections</h2><Link href="/products" className="text-link">All collections <Icon name="arrow" /></Link></div>
         <div className="collection-grid">{related.map((item) => <CollectionCard key={item.id} collection={item} />)}</div>
       </section>
-      <CatalogCallout />
     </>
   );
 }

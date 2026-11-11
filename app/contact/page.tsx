@@ -21,7 +21,7 @@ export default function Contact() {
         </div>
         <div className="contact-panel">
           <Photo image={editorial.process} className="contact-photo" priority />
-          <div className="contact-panel-copy">
+          <div className="contact-panel-copy burgundy-panel">
             <Eyebrow>Your project</Eyebrow>
             <h2>What do you have in mind?</h2>
             <ProjectInquiry />

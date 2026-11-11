@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { collections, studio } from "../lib/content";
 import { ContactDetails } from "./contact-details";
 import { Icon } from "./icons";
@@ -11,10 +11,20 @@ export function Wordmark() {
   return <span className="wordmark" aria-hidden="true" />;
 }
 
+function subscribeToScroll(onChange: () => void) {
+  window.addEventListener("scroll", onChange, { passive: true });
+  return () => window.removeEventListener("scroll", onChange);
+}
+
+const hasScrolled = () => window.scrollY > 8;
+const serverHasScrolled = () => false;
+
 export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const scrolled = useSyncExternalStore(subscribeToScroll, hasScrolled, serverHasScrolled);
+  const overHero = pathname === "/" && !scrolled && !mobileOpen;
   const productsRef = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
 
@@ -43,7 +53,7 @@ export function Header() {
   }, [productsOpen]);
 
   return (
-    <header className="site-header">
+    <header className="site-header" data-over-hero={overHero ? "" : undefined}>
       <div className="shell header-inner">
         <Link className="brand" href="/" aria-label="Folia home" onClick={closeNavigation}><Wordmark /></Link>
         <button className="menu-toggle" type="button" aria-expanded={mobileOpen} aria-controls="main-navigation"

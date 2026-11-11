@@ -2,12 +2,13 @@ import Link from "next/link";
 import { CatalogCallout, Eyebrow, LeadActions, Photo } from "../components/editorial";
 import { ParallaxHero } from "../components/parallax-hero";
 import { CollectionCard } from "../components/collection-card";
+import { CollectionRail } from "../components/collection-rail";
 import { CatalogButton } from "../components/inquiry-form";
 import { Icon } from "../components/icons";
 import { collections, editorial, materials, services, whatsappUrl } from "../lib/content";
 
 export default function Home() {
-  const featured = collections.slice(0, 3);
+  const featured = collections.slice(0, 5);
 
   return (
     <>
@@ -26,27 +27,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="shell studio-intro">
-        <div><Eyebrow>For places that welcome people.</Eyebrow><h2>One identity.<br />Across the whole table.</h2></div>
-        <div>
-          <p>We help hospitality businesses bring their presentation together. A menu that needs a new layout. A cover that feels right in the hand. The guest folder, the bill presenter, the QR menu.</p>
-          <p>We start with your space, listen to what you need, and work through the design, materials, and details with you.</p>
-          <Link href="/about" className="text-link">Meet Folia <Icon name="arrow" width="17" height="17" /></Link>
-        </div>
-      </section>
-
-      <section className="collection-section">
+      <section className="home-collections burgundy-panel" aria-labelledby="featured-collections">
         <div className="shell">
-          <div className="section-heading">
-            <div><Eyebrow>The collections</Eyebrow><h2>For the everyday<br />moments of hospitality.</h2></div>
+          <div className="section-heading scroll-entrance">
+            <div>
+              <Eyebrow>The collections</Eyebrow>
+              <h2 id="featured-collections">For the everyday<br /><em>moments of hospitality.</em></h2>
+            </div>
             <Link href="/products" className="text-link">Explore all collections <Icon name="arrow" width="17" height="17" /></Link>
           </div>
-          <div className="collection-grid">
-            {featured.map((collection) => <CollectionCard key={collection.id} collection={collection} />)}
-          </div>
-          <div className="collection-index-links">
-            {collections.slice(4, 9).map(({ id, title }) => <Link key={id} href={`/products/${id}`}>{title} <Icon name="arrow" width="15" height="15" /></Link>)}
-          </div>
+          <CollectionRail labelledBy="featured-collections">
+            {featured.map((collection) => (
+              <li key={collection.id}><CollectionCard collection={collection} sizes="(max-width: 680px) 80vw, 42vw" /></li>
+            ))}
+          </CollectionRail>
         </div>
       </section>
 
@@ -56,16 +50,17 @@ export default function Home() {
           <Eyebrow>It starts with your space.</Eyebrow>
           <h2>A menu should feel<br />like part of the room.</h2>
           <p>The colors, the texture, the way it opens.<br />We help you bring those choices together.</p>
+          <Link href="/about" className="text-link">Meet Folia <Icon name="arrow" width="17" height="17" /></Link>
         </div>
       </section>
 
       <section className="shell design-services" id="design-digital">
-        <div className="section-heading services-heading">
+        <div className="section-heading services-heading scroll-entrance">
           <div><Eyebrow>Design, in print &amp; online</Eyebrow><h2>From a refreshed menu<br />to a complete experience.</h2></div>
           <p>We can redesign what you already have or build a new direction around your venue.</p>
         </div>
         {services.map((service) => (
-          <article className={service.id === "qr-menus" ? "service-row service-digital" : "service-row"} key={service.id} id={service.id}>
+          <article className={service.id === "qr-menus" ? "service-row service-digital burgundy-panel scroll-entrance" : "service-row scroll-entrance"} key={service.id} id={service.id}>
             <Photo image={service.image} className="service-photo" />
             <div className="service-copy">
               <Eyebrow>{service.id === "qr-menus" ? "QR menus & digital presentation" : service.id === "website-design" ? "Websites for hospitality" : "A fresh look for your menu"}</Eyebrow>
@@ -81,7 +76,7 @@ export default function Home() {
       </section>
 
       <section className="materials-section">
-        <div className="shell materials-inner">
+        <div className="shell materials-inner scroll-entrance">
           <div className="materials-copy">
             <Eyebrow>Materials &amp; personalization</Eyebrow>
             <h2>Something you<br />can feel.</h2>
