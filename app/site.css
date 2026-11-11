@@ -570,3 +570,44 @@ html.lenis:has(dialog[open]), html.lenis:has(.main-nav.is-open) { overflow: hidd
   .language-chevron { margin-left: auto; }
   .language-panel { position: static; min-width: 0; box-shadow: none; margin-bottom: 10px; }
 }
+
+.quote-reminder {
+  position: fixed;
+  z-index: 18;
+  right: max(clamp(14px, 2.2vw, 30px), env(safe-area-inset-right));
+  bottom: max(clamp(14px, 2.2vw, 26px), env(safe-area-inset-bottom));
+  width: min(315px, calc(100% - 28px));
+  padding: 18px 20px 9px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--red);
+  border-radius: 3px;
+  box-shadow: 0 8px 28px rgb(38 23 17 / 17%);
+}
+.quote-reminder h2 { padding-right: 30px; color: var(--red-dark); font-size: 27px; }
+.quote-reminder p { margin-top: 8px; font-size: 13px; line-height: 1.6; }
+.quote-reminder .text-link { margin-top: 2px; }
+.quote-dismiss {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--red-dark);
+}
+.quote-dismiss:hover { color: var(--red); }
+body:has(.main-nav.is-open, dialog[open]) .quote-reminder-region { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .quote-reminder { animation: quote-arrival 350ms ease-out both; }
+}
+
+@keyframes quote-arrival {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

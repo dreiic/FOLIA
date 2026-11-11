@@ -147,5 +147,9 @@
   "contactDescription": "Javite se studiju Folia iz Podgorice za jelovnike, opremu, QR jelovnike ili sajt. Dostupni smo na WhatsAppu, telefonom, SMS-om i mejlom.",
   "notFound": "Stranica nije pronađena",
   "backHome": "Nazad na početnu",
-  "websiteDesign": "Izrada sajta"
+  "websiteDesign": "Izrada sajta",
+  "quoteTitle": "Ponuda po mjeri?",
+  "quoteBody": "Recite nam šta vam treba. Pripremićemo ponudu za vaš objekat.",
+  "quoteAction": "Zatražite ponudu",
+  "quoteDismiss": "Zatvori podsjetnik za ponudu"
 }

@@ -6,9 +6,10 @@ import "@fontsource/instrument-serif/latin-ext-400.css";
 import "@fontsource/instrument-serif/latin-ext-400-italic.css";
 import "@fontsource-variable/manrope";
 import { CatalogProvider } from "../../components/inquiry-form";
+import { QuoteReminder } from "../../components/quote-reminder";
 import { Footer, Header } from "../../components/site-chrome";
 import { getContent } from "../../lib/localized-content";
-import { locales, parseSegments } from "../../lib/routing";
+import { locales, localizedPath, parseSegments } from "../../lib/routing";
 import "../site.css";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default async function RootLayout({ children, params }: {
   children: ReactNode;
   params: Promise<{ segments?: string[] }>;
 }) {
-  const { locale } = parseSegments((await params).segments);
+  const { locale, path } = parseSegments((await params).segments);
   const { t, collections } = getContent(locale);
   const language = locales.find(({ id }) => id === locale)!;
 
@@ -32,6 +33,17 @@ export default async function RootLayout({ children, params }: {
           <Header locale={locale} t={t} collectionLinks={collections.map(({ id, title }) => ({ id, title }))} />
           <main id="main" tabIndex={-1}>{children}</main>
           <Footer locale={locale} t={t} />
+          {path !== "/contact" && (
+            <QuoteReminder
+              key={`${locale}:${path}`}
+              isHome={path === "/"}
+              href={`${localizedPath(locale, "/contact")}#inquiry`}
+              title={t.quoteTitle}
+              body={t.quoteBody}
+              action={t.quoteAction}
+              dismissLabel={t.quoteDismiss}
+            />
+          )}
         </CatalogProvider>
       </body>
     </html>

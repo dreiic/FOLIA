@@ -147,5 +147,9 @@
   "contactDescription": "Talk to Folia in Podgorica about custom menus, hospitality presentation, QR menus, or a website for your venue. Contact us by WhatsApp, telephone, SMS, or email.",
   "notFound": "Page not found",
   "backHome": "Back to the homepage",
-  "websiteDesign": "Website design"
+  "websiteDesign": "Website design",
+  "quoteTitle": "Need a tailored quote?",
+  "quoteBody": "Tell us what you need and we’ll put together a quote for your venue.",
+  "quoteAction": "Request a quote",
+  "quoteDismiss": "Dismiss quote reminder"
 }
