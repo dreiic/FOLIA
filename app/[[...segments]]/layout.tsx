@@ -6,9 +6,8 @@ import "@fontsource/instrument-serif/latin-ext-400.css";
 import "@fontsource/instrument-serif/latin-ext-400-italic.css";
 import "@fontsource-variable/manrope";
 import { CatalogProvider } from "../../components/inquiry-form";
-import { QuoteReminder } from "../../components/quote-reminder";
+import { FoliaChat } from "../../components/folia-chat";
 import { Footer, Header } from "../../components/site-chrome";
-import { whatsappUrl } from "../../lib/content";
 import { getContent } from "../../lib/localized-content";
 import { locales, parseSegments } from "../../lib/routing";
 import { siteOrigin } from "../../lib/seo";
@@ -35,17 +34,7 @@ export default async function RootLayout({ children, params }: {
           <Header locale={locale} t={t} collectionLinks={collections.map(({ id, title }) => ({ id, title }))} />
           <main id="main" tabIndex={-1}>{children}</main>
           <Footer locale={locale} t={t} />
-          {path !== "/contact" && path !== "/privacy" && (
-            <QuoteReminder
-              key={`${locale}:${path}`}
-              isHome={path === "/"}
-              href={whatsappUrl(t.quoteMessage)}
-              title={t.quoteTitle}
-              body={t.quoteBody}
-              action={t.quoteAction}
-              dismissLabel={t.quoteDismiss}
-            />
-          )}
+          {path !== "/privacy" && <FoliaChat key={locale} locale={locale} />}
         </CatalogProvider>
       </body>
     </html>

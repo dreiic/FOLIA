@@ -1,0 +1,158 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { chatCopy } from "../lib/chat/copy";
+import { chatHistoryLimit, chatInputLimit, type ChatMessage, type ChatReply } from "../lib/chat/types";
+import { emailUrl, whatsappUrl } from "../lib/content";
+import { localizedPath, type Locale } from "../lib/routing";
+import { Icon } from "./icons";
+
+type Turn = { question: string; answer?: ChatReply };
+type Availability = "checking" | "available" | "unavailable";
+
+export function FoliaChat({ locale }: { locale: Locale }) {
+  const copy = chatCopy[locale];
+  const id = useId();
+  const [open, setOpen] = useState(false);
+  const [availability, setAvailability] = useState<Availability>("checking");
+  const [turns, setTurns] = useState<Turn[]>([]);
+  const [draft, setDraft] = useState("");
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
+  const launcher = useRef<HTMLButtonElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const log = useRef<HTMLDivElement>(null);
+  const inFlight = useRef<AbortController | null>(null);
+
+  useEffect(() => () => inFlight.current?.abort(), []);
+  useEffect(() => {
+    if (!open) return;
+    closeButton.current?.focus();
+    const controller = new AbortController();
+    fetch("/api/chat", { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(8_000)]), cache: "no-store" })
+      .then(async (response) => response.ok && Boolean((await response.json()).available))
+      .then((available) => { if (!controller.signal.aborted) setAvailability(available ? "available" : "unavailable"); })
+      .catch(() => { if (!controller.signal.aborted) setAvailability("unavailable"); });
+    return () => controller.abort();
+  }, [open]);
+
+  useEffect(() => {
+    const panelLog = log.current;
+    if (panelLog) panelLog.scrollTop = panelLog.scrollHeight;
+  }, [open, turns, pending, error]);
+
+  function close() {
+    setOpen(false);
+    launcher.current?.focus();
+  }
+
+  async function send(raw: string) {
+    const question = raw.trim();
+    if (!question || inFlight.current || availability !== "available") return;
+    const controller = new AbortController();
+    inFlight.current = controller;
+    const previous = turns.filter((turn) => turn.answer).slice(-(chatHistoryLimit / 2 - 1));
+    const history: ChatMessage[] = previous.flatMap(({ question, answer }) => [
+      { role: "user", content: question },
+      { role: "assistant", content: answer!.reply },
+    ]);
+    setError("");
+    setDraft("");
+    setPending(true);
+    setTurns([...turns, { question }]);
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locale, messages: [...history, { role: "user", content: question }] }),
+        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(25_000)]),
+      });
+      if (!response.ok) {
+        setError(response.status === 429 ? copy.limited : copy.failed);
+        setDraft(question);
+        setTurns(turns);
+        return;
+      }
+      const answer: ChatReply = await response.json();
+      setTurns([...turns, { question, answer }]);
+    } catch {
+      if (controller.signal.aborted) return;
+      setError(copy.failed);
+      setDraft(question);
+      setTurns(turns);
+    } finally {
+      inFlight.current = null;
+      if (!controller.signal.aborted) setPending(false);
+    }
+  }
+
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void send(draft);
+  }
+
+  const brief = turns.findLast((turn) => turn.answer?.brief)?.answer?.brief;
+  const inquiry = brief ? `${copy.quote}\n\n${brief}` : copy.quote;
+  const disabled = availability !== "available" || pending;
+
+  return (
+    <div className="folia-chat" onKeyDown={(event) => {
+      if (open && event.key === "Escape") { event.stopPropagation(); close(); }
+    }}>
+      {open && (
+        <section id={id} className="folia-chat-panel" role="dialog" aria-modal="false" aria-labelledby={`${id}-title`}>
+          <div className="folia-chat-header">
+            <h2 id={`${id}-title`}>{copy.title}</h2>
+            <button ref={closeButton} type="button" aria-label={copy.close} onClick={close}><Icon name="close" width="18" height="18" /></button>
+          </div>
+          <div className="folia-chat-log" ref={log} role="log" aria-label={copy.title} tabIndex={0}>
+            <p className="folia-chat-bubble">{copy.welcome}</p>
+            {availability === "checking" && <p className="folia-chat-status">{copy.checking}</p>}
+            {availability === "unavailable" && <p className="folia-chat-status">{copy.unavailable}</p>}
+            {availability === "available" && !turns.length && (
+              <div className="folia-chat-suggestions">
+                {copy.suggestions.map((suggestion) => <button key={suggestion} type="button" onClick={() => void send(suggestion)}>{suggestion}</button>)}
+              </div>
+            )}
+            {turns.map(({ question, answer }, index) => (
+              <div className="folia-chat-turn" key={index}>
+                <p className="folia-chat-bubble folia-chat-visitor">{question}</p>
+                {answer && (
+                  <div className="folia-chat-answer">
+                    <p className="folia-chat-bubble">{answer.reply}</p>
+                    {answer.links.length > 0 && (
+                      <div className="folia-chat-links">
+                        {answer.links.map(({ href, label }) => <Link key={href} href={href} className="text-link" onClick={close}>{label} <Icon name="arrow" width="15" height="15" /></Link>)}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+            {pending && <p className="folia-chat-status">{copy.thinking}</p>}
+            {error && <p className="folia-chat-status" role="alert">{error}</p>}
+          </div>
+          <div className="folia-chat-controls">
+            {availability !== "unavailable" && (
+              <form onSubmit={submit} className="folia-chat-form">
+                <input aria-label={copy.input} placeholder={copy.input} value={draft} maxLength={chatInputLimit} onChange={(event) => setDraft(event.target.value)} disabled={disabled} />
+                <button className="button button-primary" type="submit" aria-label={copy.send} disabled={disabled || !draft.trim()}><Icon name="arrow" width="18" height="18" /></button>
+              </form>
+            )}
+            <div className="folia-chat-contact">
+              <a href={whatsappUrl(inquiry)} className="text-link" target="_blank" rel="noreferrer"><Icon name="whatsapp" width="17" height="17" />{brief ? copy.withBrief : copy.whatsapp}</a>
+              <a href={emailUrl(copy.subject, inquiry)} className="text-link"><Icon name="mail" width="17" height="17" />{copy.email}</a>
+            </div>
+            {availability !== "unavailable" && <p className="folia-chat-disclosure">{copy.disclosure} <Link href={localizedPath(locale, "/privacy")} onClick={close}>{copy.privacy}</Link></p>}
+          </div>
+        </section>
+      )}
+      <button ref={launcher} type="button" className="folia-chat-launcher" aria-expanded={open} aria-controls={open ? id : undefined}
+        onClick={() => { if (open) close(); else setOpen(true); }}>
+        <Icon name={open ? "close" : "message"} width="19" height="19" />
+        {open ? copy.close : copy.launcher}
+      </button>
+    </div>
+  );
+}

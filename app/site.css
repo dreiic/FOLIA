@@ -571,52 +571,6 @@ html.lenis:has(dialog[open]), html.lenis:has(.main-nav.is-open) { overflow: hidd
   .language-panel { position: static; min-width: 0; box-shadow: none; margin-bottom: 10px; }
 }
 
-.quote-reminder {
-  position: fixed;
-  z-index: 18;
-  right: max(clamp(14px, 2.2vw, 30px), env(safe-area-inset-right));
-  bottom: max(clamp(14px, 2.2vw, 26px), env(safe-area-inset-bottom));
-  width: min(315px, calc(100% - 28px));
-  padding: 18px 20px 16px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--red);
-  border-radius: 3px;
-  box-shadow: 0 8px 28px rgb(38 23 17 / 17%);
-}
-.quote-reminder h2 { padding-right: 30px; color: var(--red-dark); font-size: 27px; }
-.quote-reminder p { margin-top: 8px; font-size: 13px; line-height: 1.6; }
-.quote-reminder .quote-action {
-  width: 100%;
-  margin-top: 13px;
-  border-radius: 3px;
-  text-align: center;
-}
-.quote-dismiss {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--red-dark);
-}
-.quote-dismiss:hover { color: var(--red); }
-body:has(.main-nav.is-open, dialog[open]) .quote-reminder-region { display: none; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .quote-reminder { animation: quote-arrival 350ms ease-out both; }
-}
-
-@keyframes quote-arrival {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .privacy-page { max-width: 850px; }
 .privacy-page h1 { font-size: clamp(40px, 6vw, 65px); overflow-wrap: anywhere; }
 .privacy-page > p { margin-top: 18px; }
@@ -678,4 +632,57 @@ body:has(.main-nav.is-open, dialog[open]) .quote-reminder-region { display: none
 }
 @media (max-width: 460px) {
   .portfolio-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+
+.folia-chat {
+  position: fixed;
+  right: max(clamp(12px, 2.2vw, 28px), env(safe-area-inset-right));
+  bottom: max(clamp(12px, 2vw, 24px), env(safe-area-inset-bottom));
+  z-index: 19;
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+.folia-chat-launcher {
+  display: inline-flex; align-items: center; gap: 9px; min-height: 46px;
+  padding: 0 16px; border: 1px solid #9f6260; border-radius: 4px;
+  background: var(--red-dark); color: var(--white); font-size: 12px; font-weight: 750;
+  box-shadow: 0 5px 18px rgb(38 23 17 / 20%);
+}
+.folia-chat-launcher:hover { background: var(--red); }
+.folia-chat-panel {
+  width: min(354px, calc(100vw - 28px)); height: min(490px, calc(100dvh - 83px));
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: 5px;
+  box-shadow: 0 12px 38px rgb(38 23 17 / 23%);
+}
+.folia-chat-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 4px 7px 4px 16px; background: var(--red-dark); color: var(--white); }
+.folia-chat-header h2 { font-size: 27px; }
+.folia-chat-header button { display: grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: inherit; }
+.folia-chat-log { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 13px 13px 8px; display: grid; align-content: start; gap: 10px; }
+.folia-chat-turn { display: grid; gap: 9px; }
+.folia-chat-bubble { width: fit-content; max-width: 94%; padding: 9px 11px; border-radius: 5px; background: var(--beige); color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.5; }
+.folia-chat-visitor { justify-self: end; background: var(--red-dark); color: var(--white); }
+.folia-chat-status { font-size: 12px; }
+.folia-chat-suggestions { display: grid; gap: 6px; justify-items: start; }
+.folia-chat-suggestions button { min-height: 36px; text-align: left; padding: 4px 9px; border: 1px solid var(--line); border-radius: 3px; background: var(--white); color: var(--red-dark); font-size: 12px; }
+.folia-chat-suggestions button:hover { border-color: var(--red); }
+.folia-chat-links { display: grid; padding-left: 4px; }
+.folia-chat-links .text-link { min-height: 34px; justify-content: start; }
+.folia-chat-controls { border-top: 1px solid var(--line); padding: 9px 12px 10px; background: var(--white); }
+.folia-chat-form { display: flex; gap: 7px; }
+.folia-chat-form input { flex: 1; min-width: 0; padding: 7px 9px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); color: var(--ink); font-size: 16px; }
+.folia-chat-form button { min-height: 42px; width: 44px; padding: 0; border-radius: 3px; }
+.folia-chat-form button:disabled { opacity: .45; cursor: default; }
+.folia-chat-contact { display: flex; gap: 6px 16px; flex-wrap: wrap; }
+.folia-chat-contact .text-link { min-height: 37px; }
+.folia-chat-disclosure { font-size: 10px; line-height: 1.4; }
+.folia-chat-disclosure a { text-decoration: underline; }
+body:has(.main-nav.is-open, dialog[open]) .folia-chat { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .folia-chat-panel { animation: folia-chat-in 180ms ease-out both; }
+}
+@keyframes folia-chat-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }

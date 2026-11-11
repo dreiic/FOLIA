@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { collections } from "../../lib/content";
-import { landingContent, landingKinds } from "../../lib/landing-content";
+import { landingContent } from "../../lib/landing-content";
 import { getContent } from "../../lib/localized-content";
 import { portfolioExamples } from "../../lib/portfolio";
 import { locales, parseSegments } from "../../lib/routing";
-import { alternatePageUrls, montenegroSearchCopy, pageUrl, sitePagePaths } from "../../lib/seo";
+import { alternatePageUrls, landingKinds, montenegroSearchCopy, pageUrl, sitePagePaths } from "../../lib/seo";
 import About from "../../views/about";
 import CollectionPage from "../../views/collection";
 import Contact from "../../views/contact";

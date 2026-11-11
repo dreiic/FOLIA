@@ -49,7 +49,7 @@ export default function Portfolio({ locale }: { locale: Locale }) {
             <p>{t.portfolioDescription}</p>
             <a className="text-link" href="#portfolio-gallery">{t.portfolioExplore} <Arrow /></a>
           </div>
-          <figure>
+          <figure id={`example:${featured.id}`}>
             <PortfolioPhoto id={featured.id} alt={featuredAlt ?? featuredTitle} priority />
             <figcaption><Link href={localizedPath(locale, "/products/product-sets")} className="text-link">{featuredTitle} <Arrow /></Link></figcaption>
           </figure>
@@ -73,7 +73,7 @@ export default function Portfolio({ locale }: { locale: Locale }) {
                   const [title, description, alt] = captions[locale];
                   const category = collections.find((item) => item.id === collection)!;
                   return (
-                    <article key={photoId} className="portfolio-entry">
+                    <article key={photoId} id={`example:${photoId}`} className="portfolio-entry">
                       <PortfolioPhoto id={photoId} alt={alt ?? title} />
                       <div className="portfolio-caption">
                         <h4>{title}</h4>

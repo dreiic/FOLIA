@@ -1,12 +1,5 @@
 import type { Locale } from "./routing";
-import { menuDesignPath, waiterFoldersPath } from "./seo";
-
-export const landingKinds = {
-  [menuDesignPath]: "menuDesign",
-  [waiterFoldersPath]: "waiterFolders",
-} as const;
-
-export type LandingKind = (typeof landingKinds)[keyof typeof landingKinds];
+export type LandingKind = "menuDesign" | "waiterFolders";
 
 type Landing = {
   title: string;

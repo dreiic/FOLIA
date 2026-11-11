@@ -1,3 +1,4 @@
+import { chatCopy } from "../lib/chat/copy";
 import { studio } from "../lib/content";
 import { getMessages } from "../lib/localized-content";
 import type { Locale } from "../lib/routing";
@@ -7,6 +8,7 @@ export default function Privacy({ locale }: { locale: Locale }) {
   const sections = [
     [t.privacyInquiryTitle, t.privacyInquiry],
     [t.privacyServicesTitle, t.privacyServices],
+    [chatCopy[locale].privacyTitle, chatCopy[locale].privacyBody],
     [t.privacyStorageTitle, t.privacyStorage],
     [t.privacyRetentionTitle, t.privacyRetention],
   ];

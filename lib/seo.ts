@@ -5,6 +5,10 @@ export const siteOrigin = new URL(process.env.NEXT_PUBLIC_FOLIA_SITE_URL || "htt
 
 export const menuDesignPath = "/services/menu-design";
 export const waiterFoldersPath = "/products/waiter-folders";
+export const landingKinds = {
+  [menuDesignPath]: "menuDesign",
+  [waiterFoldersPath]: "waiterFolders",
+} as const;
 
 export const sitePagePaths = [
   "/", "/products", "/portfolio", "/about", "/contact", "/privacy", menuDesignPath, waiterFoldersPath,

@@ -34,6 +34,12 @@ For the `folia` Worker in Cloudflare Workers Builds, use the repository root and
 
 The existing `POST /api/inquiry` integration remains available for future server-side email delivery. Its optional settings are in `.env.example`. The current visitor flow uses direct WhatsApp and email links.
 
+## Folia assistant
+
+Set the encrypted `ANTHROPIC_API_KEY` secret on the production `folia` Cloudflare Worker. The optional `FOLIA_CHAT_MODEL` variable overrides the default Claude Haiku model. For local Next.js development, use an ignored `.env.local`; for local Wrangler development, use an ignored `.env.local` or supply the secret as a runtime environment variable.
+
+The assistant uses the Folia collection guides, catalogue models and portfolio. Update `lib/chat/catalog-reference.json` when the PDF model codes change. The Worker limits requests, keeps the provider key server-side, and stores no chat history. Visitors can choose to send a prepared inquiry through WhatsApp or email. The widget offers both contact links when chat is unavailable.
+
 ## Parallax hero
 
 The homepage hero uses three coordinated generated restaurant layers in `public/parallax/` (warm interior, linen curtain, and a foreground table with a burgundy Folia menu), with the original Folia wordmark as the center layer. Prompts are recorded in `brand/parallax-photography-prompts.json`. The implementation is in `components/parallax-hero.tsx`. GSAP ScrollTrigger drives the four layer speeds and Lenis smooths desktop wheel scrolling. Mobile uses a gentler motion range. Reduced-motion preferences keep the scene static. The timeline, ticker callback, and scrolling instance are cleaned up when the hero unmounts.
