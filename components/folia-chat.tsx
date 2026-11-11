@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import { chatCopy } from "../lib/chat/copy";
 import { chatHistoryLimit, chatInputLimit, type ChatMessage, type ChatReply } from "../lib/chat/types";
 import { emailUrl, whatsappUrl } from "../lib/content";
@@ -11,8 +11,30 @@ import { Icon } from "./icons";
 type Turn = { question: string; answer?: ChatReply };
 type Availability = "checking" | "available" | "unavailable";
 
-export function FoliaChat({ locale }: { locale: Locale }) {
+const noSubscription = () => () => {};
+const alwaysVisible = () => true;
+const initiallyHidden = () => false;
+
+function heroHasPassed() {
+  const hero = document.getElementById("home-hero");
+  return hero !== null && hero.getBoundingClientRect().bottom <= 0;
+}
+
+function observeHero(onChange: () => void) {
+  const hero = document.getElementById("home-hero");
+  if (!hero) return noSubscription();
+  const observer = new IntersectionObserver(onChange);
+  observer.observe(hero);
+  return () => observer.disconnect();
+}
+
+export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero: boolean }) {
   const copy = chatCopy[locale];
+  const visible = useSyncExternalStore(
+    waitForHero ? observeHero : noSubscription,
+    waitForHero ? heroHasPassed : alwaysVisible,
+    waitForHero ? initiallyHidden : alwaysVisible,
+  );
   const id = useId();
   const [open, setOpen] = useState(false);
   const [availability, setAvailability] = useState<Availability>("checking");
@@ -24,10 +46,11 @@ export function FoliaChat({ locale }: { locale: Locale }) {
   const closeButton = useRef<HTMLButtonElement>(null);
   const log = useRef<HTMLDivElement>(null);
   const inFlight = useRef<AbortController | null>(null);
+  const panelOpen = open && visible;
 
   useEffect(() => () => inFlight.current?.abort(), []);
   useEffect(() => {
-    if (!open) return;
+    if (!panelOpen) return;
     closeButton.current?.focus();
     const controller = new AbortController();
     fetch("/api/chat", { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(8_000)]), cache: "no-store" })
@@ -35,12 +58,12 @@ export function FoliaChat({ locale }: { locale: Locale }) {
       .then((available) => { if (!controller.signal.aborted) setAvailability(available ? "available" : "unavailable"); })
       .catch(() => { if (!controller.signal.aborted) setAvailability("unavailable"); });
     return () => controller.abort();
-  }, [open]);
+  }, [panelOpen]);
 
   useEffect(() => {
     const panelLog = log.current;
     if (panelLog) panelLog.scrollTop = panelLog.scrollHeight;
-  }, [open, turns, pending, error]);
+  }, [panelOpen, turns, pending, error]);
 
   function close() {
     setOpen(false);
@@ -96,8 +119,10 @@ export function FoliaChat({ locale }: { locale: Locale }) {
   const inquiry = brief ? `${copy.quote}\n\n${brief}` : copy.quote;
   const disabled = availability !== "available" || pending;
 
+  if (!visible) return null;
+
   return (
-    <div className="folia-chat" onKeyDown={(event) => {
+    <div className="folia-chat" data-after-hero={waitForHero ? "" : undefined} onKeyDown={(event) => {
       if (open && event.key === "Escape") { event.stopPropagation(); close(); }
     }}>
       {open && (

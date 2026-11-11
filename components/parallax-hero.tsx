@@ -70,7 +70,7 @@ export function ParallaxHero({ business, discover }: { business: string; discove
   }, []);
 
   return (
-    <section className="parallax" ref={parallaxRef} aria-label={`Folia · ${business}`}>
+    <section id="home-hero" className="parallax" ref={parallaxRef} aria-label={`Folia · ${business}`}>
       <div className="parallax__visuals">
         <div className="parallax__layers" data-parallax-layers>
           <Image src="/parallax/restaurant-background.webp" alt="" fill unoptimized loading="eager" fetchPriority="high"

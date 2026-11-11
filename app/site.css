@@ -680,6 +680,7 @@ html.lenis:has(dialog[open]), html.lenis:has(.main-nav.is-open) { overflow: hidd
 .folia-chat-disclosure a { text-decoration: underline; }
 body:has(.main-nav.is-open, dialog[open]) .folia-chat { display: none; }
 @media (prefers-reduced-motion: no-preference) {
+  .folia-chat[data-after-hero] { animation: folia-chat-in 280ms ease-out both; }
   .folia-chat-panel { animation: folia-chat-in 180ms ease-out both; }
 }
 @keyframes folia-chat-in {
