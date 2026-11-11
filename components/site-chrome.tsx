@@ -31,6 +31,7 @@ export function Header({ locale, t, collectionLinks }: { locale: Locale; t: Mess
   const overHero = path === "/" && !scrolled && !mobileOpen;
   const productsRef = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
+  const mobileTrigger = useRef<HTMLButtonElement>(null);
 
   function closeNavigation() {
     setMobileOpen(false);
@@ -57,14 +58,19 @@ export function Header({ locale, t, collectionLinks }: { locale: Locale; t: Mess
   }, [productsOpen]);
 
   return (
-    <header className="site-header" data-over-hero={overHero ? "" : undefined}>
+    <header className="site-header" data-over-hero={overHero ? "" : undefined} onKeyDown={(event) => {
+      if (event.key === "Escape" && mobileOpen && !productsOpen) {
+        closeNavigation();
+        mobileTrigger.current?.focus();
+      }
+    }}>
       <div className="shell header-inner">
         <Link className="brand" href={localizedPath(locale)} aria-label={t.homeLabel} onClick={closeNavigation}><Wordmark /></Link>
-        <button className="menu-toggle" type="button" aria-expanded={mobileOpen} aria-controls="main-navigation"
+        <button ref={mobileTrigger} className="menu-toggle" type="button" aria-expanded={mobileOpen} aria-controls="main-navigation"
           onClick={() => { setMobileOpen(!mobileOpen); setProductsOpen(false); }}>
           {mobileOpen ? t.close : t.menu} <Icon name={mobileOpen ? "close" : "chevron"} width="18" height="18" />
         </button>
-        <nav id="main-navigation" className={mobileOpen ? "main-nav is-open" : "main-nav"} aria-label={t.navigation}>
+        <nav id="main-navigation" className={mobileOpen ? "main-nav is-open" : "main-nav"} aria-label={t.navigation} data-lenis-prevent>
           <Link href={localizedPath(locale)} onClick={closeNavigation} aria-current={path === "/" ? "page" : undefined}>{t.home}</Link>
           <div className="products-nav" ref={productsRef}
             onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setProductsOpen(false); }}>
@@ -73,20 +79,22 @@ export function Header({ locale, t, collectionLinks }: { locale: Locale; t: Mess
               onClick={() => setProductsOpen(!productsOpen)}>
               {t.products} <Icon name="chevron" width="14" height="14" />
             </button>
-            {productsOpen && (
-              <div className="products-dropdown" id="product-navigation">
-                <div className="dropdown-heading">
-                  <span>{t.exploreCollections}</span>
-                  <Link href={localizedPath(locale, "/products")} onClick={closeNavigation}>{t.viewAll} <Icon name="arrow" width="15" height="15" /></Link>
+            <div className={productsOpen ? "products-dropdown is-open" : "products-dropdown"} id="product-navigation" inert={!productsOpen}>
+              <div className="dropdown-content">
+                <div className="dropdown-surface">
+                  <div className="dropdown-heading">
+                    <span>{t.exploreCollections}</span>
+                    <Link href={localizedPath(locale, "/products")} onClick={closeNavigation}>{t.viewAll} <Icon name="arrow" width="15" height="15" /></Link>
+                  </div>
+                  <div className="dropdown-links">
+                    {collectionLinks.map(({ id, title }) => <Link href={localizedPath(locale, `/products/${id}`)} key={id} onClick={closeNavigation}>{title}</Link>)}
+                  </div>
+                  <Link href={`${localizedPath(locale)}#design-digital`} className="dropdown-service" onClick={closeNavigation}>
+                    {t.dropdownServices} <Icon name="arrow" width="16" height="16" />
+                  </Link>
                 </div>
-                <div className="dropdown-links">
-                  {collectionLinks.map(({ id, title }) => <Link href={localizedPath(locale, `/products/${id}`)} key={id} onClick={closeNavigation}>{title}</Link>)}
-                </div>
-                <Link href={`${localizedPath(locale)}#design-digital`} className="dropdown-service" onClick={closeNavigation}>
-                  {t.dropdownServices} <Icon name="arrow" width="16" height="16" />
-                </Link>
               </div>
-            )}
+            </div>
           </div>
           <Link href={localizedPath(locale, "/portfolio")} onClick={closeNavigation} aria-current={path === "/portfolio" ? "page" : undefined}>{t.portfolio}</Link>
           <Link href={localizedPath(locale, "/about")} onClick={closeNavigation} aria-current={path === "/about" ? "page" : undefined}>{t.about}</Link>
