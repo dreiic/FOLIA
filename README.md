@@ -30,6 +30,8 @@ The supplied wordmark is retained as a transparent mask in `public/editorial/fol
 
 `npm run build:sites` produces prerendered pages in `dist/client` and a Worker at `dist/server/index.js`. Site identity is preserved in `.openai/hosting.json`.
 
+For the `folia` Worker in Cloudflare Workers Builds, use the repository root and `npx wrangler deploy` as the deploy command. The separate build command can be left blank because Wrangler runs `npm run build:sites` from `wrangler.jsonc`. Set `NEXT_PUBLIC_FOLIA_SITE_URL` to the production URL in the build environment for canonical links.
+
 The existing `POST /api/inquiry` integration remains available for future server-side email delivery. Its optional settings are in `.env.example`. The current visitor flow uses direct WhatsApp and email links.
 
 ## Parallax hero
