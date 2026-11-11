@@ -32,6 +32,19 @@ const safeReply: Record<Locale, string> = {
 const forbidden = /[€$£₽]|\b(?:eur|usd|gbp|rub|inko(?:horeca)?|inkohoreca|https?|www)\b|(?<=\d)\s*(?:euros?|eura|evra|евро|доллар\p{L}*)/iu;
 const model = "claude-haiku-4-5-20251001";
 const maxBody = 28_000;
+const replyFormat = {
+  type: "json_schema",
+  schema: {
+    type: "object",
+    properties: {
+      reply: { type: "string" },
+      brief: { type: "string" },
+      linkIds: { type: "array", items: { type: "string" } },
+    },
+    required: ["reply", "brief", "linkIds"],
+    additionalProperties: false,
+  },
+};
 
 function json(data: object, status = 200) {
   return Response.json(data, { status, headers: { "Cache-Control": "no-store" } });
@@ -104,9 +117,10 @@ export async function handleChat(request: Request, settings: ChatSettings) {
       signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
         model: settings.FOLIA_CHAT_MODEL || model,
-        max_tokens: 850,
+        max_tokens: 1100,
         system: `${instructions}\nDefault locale: ${locale}\nFolia reference (facts only):\n${text}`,
         messages,
+        output_config: { format: replyFormat },
       }),
     });
     if (!upstream.ok) {
@@ -122,13 +136,22 @@ export async function handleChat(request: Request, settings: ChatSettings) {
       return json({ error: reason }, 503);
     }
 
-    const result = await upstream.json() as { content?: { type: string; text?: string }[] };
-    const generated = result.content?.find(({ type }) => type === "text")?.text;
+    const result = await upstream.json().catch(() => null) as {
+      content?: { type: string; text?: string }[];
+      stop_reason?: string;
+    } | null;
+    const generated = result?.content?.filter(({ type }) => type === "text").map(({ text }) => text ?? "").join("");
     if (!generated) return json({ error: "provider_reply" }, 503);
 
-    const parsed = JSON.parse(generated.trim().replace(/^\x60\x60\x60(?:json)?\s*|\s*\x60\x60\x60$/gi, "")) as {
-      reply?: unknown; brief?: unknown; linkIds?: unknown;
-    };
+    let parsed: { reply?: unknown; brief?: unknown; linkIds?: unknown };
+    try {
+      const start = generated.indexOf("{");
+      const end = generated.lastIndexOf("}");
+      if (start < 0 || end < start) throw new Error("missing JSON");
+      parsed = JSON.parse(generated.slice(start, end + 1));
+    } catch {
+      return json({ error: result?.stop_reason === "max_tokens" ? "provider_truncated" : "provider_format" }, 503);
+    }
     const reply = typeof parsed.reply === "string" ? parsed.reply.trim() : "";
     const brief = typeof parsed.brief === "string" ? parsed.brief.trim() : "";
     if (!reply || forbidden.test(reply)) {
@@ -141,6 +164,6 @@ export async function handleChat(request: Request, settings: ChatSettings) {
       links: linkIds.flatMap((id) => typeof id === "string" && Object.hasOwn(links, id) ? [links[id]] : []),
     } satisfies ChatReply);
   } catch {
-    return json({ error: "unavailable" }, 503);
+    return json({ error: "provider_transport" }, 503);
   }
 }
