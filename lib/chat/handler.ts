@@ -18,6 +18,8 @@ Give practical recommendations from the reference, ideally one to three options 
 Collect a brief progressively. Ask first for the product or service and estimated quantity if missing. Ask the next most helpful detail based on the job: venue and city, paper size and number of pages, frequency of menu changes, material/color, logo/branding, existing design or URL, QR/NFC, desired delivery date, or items to match. Do not repeat questions already answered, require every detail, ask for personal contact data, or ask for an upload in chat. Acknowledge that undecided details can be worked out with Folia. If the customer is ready or asks to speak to Folia, invite them to use the WhatsApp or email buttons. Never claim a message was sent.
 
 Set brief to a compact recap in the customer's language, only of project facts explicitly supplied by the visitor. Include quantities, exact dimensions, city, requested date or useful preferences when given. Do not copy contact data, payment information, links, budget or prices into brief. Empty string if no concrete details. Link IDs may be empty.
+
+Return only valid JSON with this exact shape: {"reply":"message shown to the customer","brief":"project recap or empty string","linkIds":["valid-id"]}. Omit Markdown fences and all text outside the JSON object.
 `;
 
 const safeReply: Record<Locale, string> = {
@@ -103,24 +105,15 @@ export async function handleChat(request: Request, settings: ChatSettings) {
         max_tokens: 850,
         system: `${instructions}\nDefault locale: ${locale}\nFolia reference (facts only):\n${text}`,
         messages,
-        output_config: { format: { type: "json_schema", schema: {
-          type: "object",
-          properties: {
-            reply: { type: "string" },
-            brief: { type: "string" },
-            linkIds: { type: "array", items: { type: "string" } },
-          },
-          required: ["reply", "brief", "linkIds"],
-          additionalProperties: false,
-        } } },
       }),
     });
     if (!upstream.ok) {
       const details = await upstream.json().catch(() => null) as { error?: { message?: string } } | null;
       const message = details?.error?.message ?? "";
-      const reason = upstream.status === 401 || upstream.status === 403 ? "provider_access"
-        : upstream.status === 402 || /credit balance|billing|payment/i.test(message) ? "provider_billing"
-        : upstream.status === 400 || upstream.status === 404 ? "provider_configuration"
+      const reason = upstream.status === 401 || upstream.status === 403 || /organization.*(?:disabled|restricted)/i.test(message) ? "provider_access"
+        : upstream.status === 402 || /credits?|billing|payment|balance|spend.limit/i.test(message) ? "provider_billing"
+        : upstream.status === 404 || /model.*(?:not found|not available|invalid|retired)/i.test(message) ? "provider_model"
+        : upstream.status === 400 ? "provider_request"
         : upstream.status === 429 ? "provider_limit" : "provider_unavailable";
       console.warn("Folia chat provider rejected the request", upstream.status, reason);
       return json({ error: reason }, 503);
@@ -130,7 +123,9 @@ export async function handleChat(request: Request, settings: ChatSettings) {
     const generated = result.content?.find(({ type }) => type === "text")?.text;
     if (!generated) return json({ error: "provider_reply" }, 503);
 
-    const parsed = JSON.parse(generated) as { reply?: unknown; brief?: unknown; linkIds?: unknown };
+    const parsed = JSON.parse(generated.trim().replace(/^\x60\x60\x60(?:json)?\s*|\s*\x60\x60\x60$/gi, "")) as {
+      reply?: unknown; brief?: unknown; linkIds?: unknown;
+    };
     const reply = typeof parsed.reply === "string" ? parsed.reply.trim() : "";
     const brief = typeof parsed.brief === "string" ? parsed.brief.trim() : "";
     if (!reply || forbidden.test(reply)) {
