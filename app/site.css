@@ -711,6 +711,10 @@ html.lenis:has(dialog[open]) { overflow: hidden; }
 .folia-chat-handoff { display: grid; justify-items: start; gap: 5px; padding-top: 8px; }
 .folia-chat-handoff .button { padding: 8px 12px; min-height: 40px; }
 .folia-chat-handoff p { font-size: 11px; }
+.folia-chat-inquiry { padding: 10px; border: 1px solid var(--line); border-radius: 5px; }
+.folia-chat-inquiry label { display: grid; gap: 4px; width: 100%; font-size: 12px; }
+.folia-chat-inquiry input { width: 100%; min-width: 0; padding: 6px 8px; border: 1px solid var(--line); border-radius: 3px; background: var(--white); color: var(--ink); font-size: 16px; }
+.folia-chat-inquiry button:disabled { opacity: .55; cursor: default; }
 .folia-chat-controls { border-top: 1px solid var(--line); padding: 9px 12px 10px; background: var(--white); }
 .folia-chat-form { display: flex; gap: 7px; }
 .folia-chat-form input { flex: 1; min-width: 0; padding: 7px 9px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); color: var(--ink); font-size: 16px; }

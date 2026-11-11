@@ -8,7 +8,7 @@ export default function Privacy({ locale }: { locale: Locale }) {
   const sections = [
     [t.privacyInquiryTitle, t.privacyInquiry],
     [t.privacyServicesTitle, t.privacyServices],
-    [chatCopy[locale].privacyTitle, chatCopy[locale].privacyBody],
+    [chatCopy[locale].privacyTitle, `${chatCopy[locale].privacyBody} ${chatCopy[locale].quotePrivacy}`],
     [t.privacyStorageTitle, t.privacyStorage],
     [t.privacyRetentionTitle, t.privacyRetention],
   ];

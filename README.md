@@ -32,7 +32,7 @@ The supplied wordmark is retained as a transparent mask in `public/editorial/fol
 
 For the `folia` Worker in Cloudflare Workers Builds, use the repository root and `npx wrangler deploy` as the deploy command. The separate build command can be left blank because Wrangler runs `npm run build:sites` from `wrangler.jsonc`. Set `NEXT_PUBLIC_FOLIA_SITE_URL` to the production URL in the build environment for canonical links.
 
-The existing `POST /api/inquiry` integration remains available for future server-side email delivery. Its optional settings are in `.env.example`. The current visitor flow uses direct WhatsApp and email links.
+The chat inquiry form uses `POST /api/inquiry` to send the customer's name, phone number and project summary to Folia through Resend. Set `RESEND_API_KEY` as a Worker secret and `FOLIA_INQUIRY_FROM` to an address on a verified sending domain. `FOLIA_INQUIRY_TO` overrides the studio email if needed.
 
 ## Folia assistant
 

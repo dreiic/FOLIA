@@ -1,10 +1,16 @@
 import { collections, inquiryTypes, studio } from "./content";
+import { chatBriefLimit } from "./chat/types";
 
 export interface MailSettings {
   RESEND_API_KEY?: string;
   FOLIA_INQUIRY_FROM?: string;
   FOLIA_INQUIRY_TO?: string;
   FOLIA_SITE_ORIGIN?: string;
+  CHAT_RATE_LIMIT?: { limit(options: { key: string }): Promise<{ success: boolean }> };
+}
+
+export function canSendInquiry(settings: MailSettings) {
+  return Boolean(settings.RESEND_API_KEY?.trim() && settings.FOLIA_INQUIRY_FROM?.trim());
 }
 
 const productLabels = new Map(collections.map(({ id, title }) => [id, title]));
@@ -55,11 +61,25 @@ function validate(fields: Record<string, unknown>) {
   }
 
   const catalog = fields.mode === "catalog";
-  if ((!catalog && fields.mode !== "contact") || field("website", 120)) {
+  const chat = fields.mode === "chat";
+  if ((!catalog && !chat && fields.mode !== "contact") || field("website", 120)) {
     throw new Error("Please check the form and try again.");
   }
 
   const name = field("name", 120);
+  if (chat) {
+    const phone = field("phone", 32);
+    const summary = field("summary", chatBriefLimit);
+    const digits = phone.replace(/\D/g, "");
+    if (!name || !summary || !/^\+?[\d .()-]+$/.test(phone) || digits.length < 7 || digits.length > 15) {
+      throw new Error("Enter a name, a valid phone number and a project summary.");
+    }
+    return {
+      email: "",
+      type: "Chat inquiry",
+      text: `Ime: ${name.replace(/\s+/g, " ")}\nTelefon: ${phone}\n\nSažetak razgovora:\n${summary}`,
+    };
+  }
   const business = field("business", 160);
   const email = field("email", 254);
   const phone = catalog ? "" : field("phone", 50);
@@ -131,19 +151,28 @@ export async function handleInquiry(request: Request, settings: MailSettings) {
   }
 
   const id = request.headers.get("idempotency-key") ?? "";
+  const validId = /^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i.test(id);
+  if (fields.mode === "chat" && (!origin || !validId)) {
+    return response(400, "Please submit the chat inquiry from the Folia website.");
+  }
   const headers: Record<string, string> = { Authorization: `Bearer ${key}`, "Content-Type": "application/json" };
-  if (/^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i.test(id)) {
+  if (validId) {
     headers["Idempotency-Key"] = `folia/${id}`;
   }
 
   try {
+    if (fields.mode === "chat" && settings.CHAT_RATE_LIMIT) {
+      const ip = request.headers.get("cf-connecting-ip") ?? "unknown";
+      const { success } = await settings.CHAT_RATE_LIMIT.limit({ key: `inquiry:${ip}` });
+      if (!success) return response(429, "Please wait before trying again.");
+    }
     const sent = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers,
       body: JSON.stringify({
         from,
         to: [to],
-        reply_to: inquiry.email,
+        ...(inquiry.email && { reply_to: inquiry.email }),
         subject: `Folia website | ${inquiry.type}`,
         text: inquiry.text,
       }),
