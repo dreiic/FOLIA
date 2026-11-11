@@ -1,3 +1,5 @@
+import { getMessages } from "../lib/localized-content";
+import { localizedPath, type Locale } from "../lib/routing";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -27,35 +29,35 @@ export function Photo({ image, className = "", priority = false, sizes = "(max-w
   );
 }
 
-export function LeadActions({ topic, className = "" }: { topic?: string; className?: string }) {
-  const message = topic
-    ? `Hello Folia, I’m interested in ${topic.toLowerCase()}. Could you share more about the options for my venue?`
-    : "Hello Folia, I’d like to discuss a hospitality project.";
+export function LeadActions({ locale, topic, className = "" }: { locale: Locale; topic?: string; className?: string }) {
+  const t = getMessages(locale);
+  const message = topic ? t.topicMessage.replace("{topic}", () => topic) : t.leadMessage;
   return (
     <div className={`actions ${className}`}>
       <a href={whatsappUrl(message)} className="button button-primary" target="_blank" rel="noreferrer">
-        <Icon name="whatsapp" width="18" height="18" /> Talk on WhatsApp
+        <Icon name="whatsapp" width="18" height="18" /> {t.talkWhatsApp}
       </a>
-      <a href={emailUrl(topic ? `Folia | ${topic}` : "Folia | Project inquiry", message)} className="text-link">
-        Email the studio <Icon name="mail" width="17" height="17" />
+      <a href={emailUrl(`Folia | ${topic ?? t.projectSubject}`, message)} className="text-link">
+        {t.emailStudio} <Icon name="mail" width="17" height="17" />
       </a>
     </div>
   );
 }
 
-export function CatalogCallout() {
+export function CatalogCallout({ locale }: { locale: Locale }) {
+  const t = getMessages(locale);
   return (
     <section className="catalog-callout">
       <div className="shell catalog-inner">
         <div>
-          <Eyebrow>Let’s find the right details.</Eyebrow>
-          <h2>Your space.<br />Your way.</h2>
+          <Eyebrow>{t.calloutEyebrow}</Eyebrow>
+          <h2>{t.calloutFirst}<br />{t.calloutSecond}</h2>
         </div>
         <div className="catalog-copy">
-          <p>Tell us about your venue and what you have in mind. We’ll share the catalog, help you explore materials, and put together a proposal around your needs.</p>
-          <LeadActions />
-          <CatalogButton className="text-link catalog-secondary">Ask for the collection catalog <Arrow /></CatalogButton>
-          <Link href="/contact" className="catalog-contact-link">All contact details</Link>
+          <p>{t.calloutText}</p>
+          <LeadActions locale={locale} />
+          <CatalogButton className="text-link catalog-secondary">{t.requestCatalog} <Arrow /></CatalogButton>
+          <Link href={localizedPath(locale, "/contact")} className="catalog-contact-link">{t.allContacts}</Link>
         </div>
       </div>
     </section>

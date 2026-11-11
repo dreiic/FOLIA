@@ -243,7 +243,8 @@ svg { flex-shrink: 0; }
   .contact-copy h1 { font-size: 59px; }
 }
 @media (max-width: 760px) {
-  html { --header-height: 72px; scroll-padding-top: 85px; }
+  :root { --header-height: 72px; }
+  html { scroll-padding-top: 85px; }
   .header-inner { grid-template-columns: 1fr auto; gap: 0 20px; }
   .wordmark { width: 78px; }
   .header-contact { display: none; }
@@ -517,4 +518,22 @@ html.lenis:has(dialog[open]), html.lenis:has(.main-nav.is-open) { overflow: hidd
 
 @media (prefers-reduced-motion: reduce) {
   .collection-controls button { transition: none; }
+}
+
+.header-end { justify-self: end; display: flex; align-items: center; gap: clamp(12px, 2vw, 28px); }
+.language-picker { position: relative; color: var(--red); }
+.language-picker > span { display: flex; align-items: center; justify-content: center; gap: 5px; min-width: 44px; min-height: 44px; padding-inline: 6px; font-size: 11px; font-weight: 750; }
+.language-picker select { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.language-picker:focus-within { outline: 2px solid currentColor; outline-offset: 1px; }
+.site-header[data-over-hero] .language-picker { color: var(--white); }
+:lang(ru) { --serif: Georgia, "Times New Roman", serif; }
+:lang(ru) :is(h1, h2, h3) { overflow-wrap: anywhere; }
+:lang(ru) h1 { font-size: clamp(38px, 5vw, 72px); }
+:lang(ru) h2 { font-size: clamp(34px, 3.8vw, 54px); }
+:lang(ru) .collection-card h3 { font-size: clamp(22px, 2vw, 30px); }
+
+@media (max-width: 760px) {
+  .header-inner { grid-template-columns: 1fr auto auto; gap: 0 12px; }
+  .header-end { grid-column: 3; grid-row: 1; }
+  .main-nav { grid-row: 2; }
 }

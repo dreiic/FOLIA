@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Icon } from "./icons";
 
-export function CollectionRail({ children, labelledBy }: { children: ReactNode; labelledBy: string }) {
+export function CollectionRail({ children, labelledBy, previousLabel, nextLabel }: { children: ReactNode; labelledBy: string; previousLabel: string; nextLabel: string }) {
   const id = useId();
   const track = useRef<HTMLUListElement>(null);
   const [position, setPosition] = useState({ start: true, end: true });
@@ -46,11 +46,11 @@ export function CollectionRail({ children, labelledBy }: { children: ReactNode; 
         {children}
       </ul>
       <div className="collection-controls">
-        <button type="button" aria-controls={id} aria-label="Previous collections" aria-disabled={position.start}
+        <button type="button" aria-controls={id} aria-label={previousLabel} aria-disabled={position.start}
           onClick={() => { if (!position.start) move(-1); }}>
           <Icon name="arrow" className="arrow-back" />
         </button>
-        <button type="button" aria-controls={id} aria-label="Next collections" aria-disabled={position.end}
+        <button type="button" aria-controls={id} aria-label={nextLabel} aria-disabled={position.end}
           onClick={() => { if (!position.end) move(1); }}>
           <Icon name="arrow" />
         </button>

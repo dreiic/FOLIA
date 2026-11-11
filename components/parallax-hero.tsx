@@ -8,7 +8,7 @@ import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { Icon } from "./icons";
 
-export function ParallaxHero() {
+export function ParallaxHero({ business, discover }: { business: string; discover: string }) {
   const parallaxRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export function ParallaxHero() {
   }, []);
 
   return (
-    <section className="parallax" ref={parallaxRef} aria-label="Folia hospitality design and supply">
+    <section className="parallax" ref={parallaxRef} aria-label={`Folia · ${business}`}>
       <div className="parallax__visuals">
         <div className="parallax__layers" data-parallax-layers>
           <Image src="/parallax/restaurant-background.webp" alt="" fill unoptimized loading="eager" fetchPriority="high"
@@ -79,7 +79,7 @@ export function ParallaxHero() {
             className="parallax__layer-img" data-parallax-layer="2" aria-hidden="true" draggable={false} />
           <div data-parallax-layer="3" className="parallax__layer-title">
             <h1 className="parallax__title">
-              <span className="sr-only">Folia — Hospitality design &amp; supply</span>
+              <span className="sr-only">Folia · {business}</span>
               <span className="parallax__logo" aria-hidden="true" />
             </h1>
           </div>
@@ -88,8 +88,8 @@ export function ParallaxHero() {
         </div>
         <div className="parallax__fade" aria-hidden="true" />
         <div className="parallax__caption">
-          <p>Hospitality design &amp; supply</p>
-          <a href="#hero-introduction">Discover Folia <Icon name="arrow" width="17" height="17" /></a>
+          <p>{business}</p>
+          <a href="#hero-introduction">{discover} <Icon name="arrow" width="17" height="17" /></a>
         </div>
       </div>
     </section>

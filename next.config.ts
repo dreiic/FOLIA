@@ -11,6 +11,7 @@ const config: NextConfig = {
     deviceSizes: [640, 960, 1440, 2048, 3072],
   },
   poweredByHeader: false,
+  experimental: { globalNotFound: true },
   turbopack: { root: process.cwd() },
   agentRules: false,
   devIndicators: false,

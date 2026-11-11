@@ -1,0 +1,159 @@
+{
+  "menu-covers": {
+    "title": "Korice za jelovnike",
+    "short": "Korice za jelovnike i vinske karte po mjeri, od kože, tkanine, drveta i drugih materijala.",
+    "detail": "Jelovnik je među prvim stvarima koje gost uzme u ruke. Odaberite materijal, boju i završnu obradu koji pristaju vašem restoranu, baru ili kafiću.",
+    "examples": ["Jelovnici, koktel karte i vinske karte", "Drvo, prirodna i vještačka koža, tkanina i filc", "Prstenovi, vijci, ugaoni držači i elastični povezi"],
+    "alt": "Bordo kožne i platnene korice za jelovnik",
+    "options": [
+      ["Materijal korica", "Birajte između prirodne kože, glatke PU kože ili PU kože s izgledom nubuka, tkanine, filca i drveta. Pojedini modeli od filca imaju čvrstu drvenu poleđinu."],
+      ["Format papira", "A4 i A5 su dobar polazni izbor za jelovnike i vinske karte. Pojedini modeli primaju i formate Letter i Half Letter, uske i kvadratne listove."],
+      ["Povez i zamjena listova", "Prstenovi odgovaraju bušenim listovima, vijci drže više listova na okupu, a ugaoni držači pričvršćuju jedan list. Elastični povez je praktičan za presavijene jelovnike."],
+      ["Nanošenje logotipa", "Na koži je moguć utisak bez boje, na filcu kožna etiketa s logotipom, a na odabranim drvenim koricama gravura ili UV štampa."]
+    ],
+    "brief": "Pošaljite nam postojeći jelovnik ili dimenzije papira, broj listova, koliko često ih mijenjate i koliko korica vam treba."
+  },
+  "hotel-guest-folders": {
+    "title": "Hotelske mape za goste",
+    "short": "Mape za goste, vodiči za sobe i rješenja za prezentaciju na recepciji.",
+    "detail": "Neka korisne informacije budu dio dobrodošlice. Osmislićemo mapu koja odgovara ambijentu i dokumentima koje želite da stavite u nju.",
+    "examples": ["Informativne mape za goste", "Vodiči za hotelske sobe", "Mape za recepciju"],
+    "alt": "Otvorena mapa s informacijama za hotelske goste",
+    "options": [
+      ["Vodiči u sobama", "Predvidite mjesto za podatke o Wi‑Fi mreži, vrijeme doručka i odjave, poslugu u sobi i lokalne preporuke."],
+      ["Mape za recepciju", "Izaberite raspored za pismo dobrodošlice, plan boravka ili štampane informacije. Unutrašnji džepovi drže pojedinačne listove na okupu."],
+      ["Materijal i raspored", "Uporedite kožu i tkaninu, pa izaberite format prema dokumentima koje koristite. Zamjenjivi listovi su praktični ako se informacije mijenjaju sezonski."]
+    ],
+    "brief": "Recite nam šta mapa treba da sadrži, koje su dimenzije umetaka i koliko soba ili recepcijskih pultova opremate."
+  },
+  "restaurant-accessories": {
+    "title": "Restoranski dodaci",
+    "short": "Mape za račun i drugi detalji koji se mogu uskladiti s izgledom stola i vašim brendom.",
+    "detail": "Od jelovnika do računa, povežite boje, teksture i logotip u cjelinu koju gosti prepoznaju.",
+    "examples": ["Drvene i kožne mape za račun, kao i modeli od filca", "Blokovi i mape za konobare", "Oznake za rezervisane stolove"],
+    "alt": "Mapa za račun, blok za konobare i oznaka za rezervisani sto",
+    "options": [
+      ["Mape za račun", "Uporedite drvene i kožne modele i modele od filca. Odaberite džep ili držač koji odgovara formatu računa i načinu na koji ga osoblje predaje gostu."],
+      ["Blokovi za konobare", "Izaberite format prema bloku za narudžbe i papirićima koje osoblje nosi. Završnu obradu uskladite s jelovnicima i mapama za račun."],
+      ["Oznake za rezervaciju", "Drvene oznake za sto mogu nositi natpis i vaš logotip. Razmislite treba li da natpis bude čitljiv s obje strane."]
+    ],
+    "brief": "Recite nam koje detalje želite da uskladite, koje dimenzije imaju računi ili blokovi i koliko stolova ili članova osoblja opremate."
+  },
+  "digital-menus": {
+    "title": "QR i digitalni jelovnici",
+    "short": "Digitalni jelovnici u vašem vizuelnom stilu i QR ili NFC stalci od akrila, šperploče ili punog drveta.",
+    "detail": "Ponudite gostima pregledan jelovnik na telefonu. Dizajniramo digitalni jelovnik i pomažemo vam da izaberete QR stalak koji pristaje stolu.",
+    "examples": ["Digitalni jelovnik s vašim logotipom i bojama", "QR stalci od akrila, šperploče i drveta", "NFC stalci za otvaranje jelovnika prislanjanjem telefona"],
+    "alt": "Digitalni jelovnik na telefonu pored bordo QR stalka",
+    "options": [
+      ["QR stalci", "Birajte prozirni akril, drveni stalak sa štampom ili gravurom ili varijantu od šperploče. Uz QR kod možemo postaviti naziv objekta ili logotip."],
+      ["NFC stalci", "Na odabranim modelima gost može otvoriti jelovnik prislanjanjem kompatibilnog telefona. Kombinovani QR i NFC stalak ostavlja mogućnost skeniranja kamerom."],
+      ["Dizajn digitalnog jelovnika", "Možete koristiti postojeći link ili nam povjeriti izradu jelovnika za telefon. Hranu, piće i sezonsku ponudu rasporedićemo u jasne cjeline, u vašem vizuelnom stilu."]
+    ],
+    "brief": "Pošaljite postojeći jelovnik ili link i logotip. Navedite gdje će stalci stajati i treba li vam stalak, digitalni jelovnik ili oboje."
+  },
+  "menu-holders": {
+    "title": "Stalci za jelovnike i stoni displeji",
+    "short": "Samostojeći displeji za dnevnu ponudu, pića, promocije i obavještenja na stolu.",
+    "detail": "Izaberite stoni displej od drveta ili akrila, s uspravnim umetkom, magnetom, prstenovima ili štipaljkom.",
+    "examples": ["Drveni stalci i stalci od prozirnog akrila", "Magnetni stalci", "Dvostrani displeji i držači natpisa"],
+    "alt": "Akrilni i drveni stalci za jelovnik na stolu",
+    "options": [
+      ["Drvena postolja", "Držač s prorezom ili magnetom drži karticu uspravno. Uzmite u obzir debljinu umetka i koliko često ga osoblje mijenja."],
+      ["Prozirni akril", "Odaberite displej za štampane listove ili obavještenja. Pojedini akrilni modeli s drvenom bazom primaju A4 ili Letter listove."],
+      ["Stoni displeji", "Kompaktni format je praktičan za piće, dnevne specijalitete ili promocije. Za zajedničke stolove odaberite model čitljiv s obje strane."]
+    ],
+    "brief": "Pošaljite dimenzije kartice ili papira i navedite gdje će stalak stajati: na stolu, šanku ili recepciji."
+  },
+  "menu-boards": {
+    "title": "Podloge za jelovnike",
+    "short": "Čvrste podloge s vidljivim listovima koje osoblje lako može zamijeniti.",
+    "detail": "Predstavite jedan list ili kraći jelovnik na drvenoj podlozi, s oblogom od kože ili filca.",
+    "examples": ["Drvene podloge i modeli obloženi kožom ili filcom", "Štipaljke, metalni prstenovi i stezne letvice", "Ugaoni i elastični držači"],
+    "alt": "Drvene podloge za jelovnik i modeli s kožnom oblogom",
+    "options": [
+      ["Štipaljke i stezne letvice", "Štipaljkom brzo zamijenite list s dnevnom ponudom. Letvica pričvršćena vijcima drži više listova i poravnava gornju ivicu."],
+      ["Prstenovi i ugaoni držači", "Prstenovi odgovaraju bušenim listovima, a ugaoni držači uokviruju jedan list. Izaberite povez prema načinu korišćenja jelovnika."],
+      ["Završna obrada", "Uporedite drvo i modele obložene kožom ili filcom. U zavisnosti od modela, logotip se može ugravirati u drvo ili nanijeti na oblogu."]
+    ],
+    "brief": "Navedite format, broj listova i koliko često mijenjate jelovnik. Pomoći ćemo da izaberete odgovarajući način pričvršćivanja."
+  },
+  "wall-menu-boards": {
+    "title": "Zidne table za jelovnike",
+    "short": "Zidni prikaz s izmjenjivim sadržajem za šankove, kafiće i prostore za usluživanje.",
+    "detail": "Istaknite jelovnik, dnevnu ponudu ili kartu pića na hrastovim letvicama s izmjenjivim slovima.",
+    "examples": ["Prirodne, tamne i uljene hrastove letvice", "Slova od akrila i HDF-a", "Viseće table za jelovnike"],
+    "alt": "Zidni jelovnik na hrastovim letvicama u kafiću",
+    "options": [
+      ["Hrastove letvice", "Prirodni, uljeni i tamni hrast daju različit kontrast u odnosu na zid. Rasporedite letvice prema broju kategorija i redova."],
+      ["Izmjenjiva slova", "Pojedini sistemi koriste slova od akrila ili HDF-a za pića, specijalitete i cijene. Predvidite rezervna slova za stavke koje se najčešće mijenjaju."],
+      ["Položaj", "Pri izboru rasporeda uzmite u obzir udaljenost s koje gosti čitaju, širinu zida i prepreke iznad šanka."]
+    ],
+    "brief": "Pošaljite fotografiju i raspoložive dimenzije zida, kao i najdužu verziju jelovnika ili cjenovnika koji želite da izložite."
+  },
+  "table-service": {
+    "title": "Dodaci za sto i serviranje",
+    "short": "Daske za serviranje i detalji za sto koje možete uskladiti s jelovnicima.",
+    "detail": "Uskladite postavku stola, od držača pribora do poslužavnika, u materijalima koji odgovaraju vašem prostoru.",
+    "examples": ["Držači pribora, salveta i stoni organizatori", "Poslužavnici, degustacione daske i daske s pregradama", "Podmetači za tanjire i čaše, kutije za maramice"],
+    "alt": "Usklađene daske za serviranje, podmetači i dodaci za sto",
+    "options": [
+      ["Pribor i salvete", "Uporedite drvene držače i kožne futrole za pribor, kao i držače za koktel ili veće salvete."],
+      ["Serviranje", "Odaberite poslužavnik, degustacionu dasku ili dasku s pregradama prema onome što služite i prostoru na stolu."],
+      ["Podmetači za tanjire i čaše", "Dimenzije prilagodite tanjirima i čašama. Kožne i drvene dodatke možete uskladiti s jelovnicima i mapama za račun."]
+    ],
+    "brief": "Navedite šta treba da stane u svaki dodatak, dimenzije stola i završnu obradu koju želite da uskladite."
+  },
+  "signage": {
+    "title": "Oznake za ugostiteljske objekte",
+    "short": "Oznake za sobe, putokazi, informativne i poslovne table.",
+    "detail": "Prenesite vizuelni identitet i na prostore za goste, uz jasne putokaze, pločice s logotipom i svjetleće oznake.",
+    "examples": ["Brojevi soba, viseće oznake za vrata i vodiči po spratovima", "Putokazi i oznake za toalete, parking i informacije", "Unutrašnje i svjetleće oznake po mjeri"],
+    "alt": "Bordo oznake za sobu i smjer uz drvena hotelska vrata",
+    "options": [
+      ["Sobe i vrata", "Brojeve soba, viseće oznake za vrata i spratne vodiče planirajte kao cjelinu. Prije finalnog dizajna pripremite spisak soba."],
+      ["Putokazi i obavještenja", "Koristite dosljedne natpise i simbole za ulaze, toalete, parking i prostore za goste. Položaj i udaljenost čitanja određuju format."],
+      ["Oznake za objekat", "Razmotrite gravirane ili štampane pločice, unutrašnje oznake s logotipom i svjetleće table. Materijal i pričvršćivanje zavise od mjesta i podloge."]
+    ],
+    "brief": "Pošaljite tekst, približne dimenzije i fotografiju svake lokacije. Navedite koje oznake idu napolje."
+  },
+  "menu-inserts": {
+    "title": "Umetci i dodaci za jelovnike",
+    "short": "Štampani listovi i zaštitne folije za korice jelovnika.",
+    "detail": "Odaberite umetak koji odgovara formatu, povezu i načinu na koji osoblje ažurira jelovnik.",
+    "examples": ["Mat i sjajna digitalna štampa", "A formati, američki i uski formati", "Bušene i preklopne zaštitne folije"],
+    "alt": "Svijetli umetci za jelovnik i zaštitne folije uz korice",
+    "options": [
+      ["Štampa i završna obrada", "Mat ili sjajnu štampu birajte prema papiru, osvjetljenju u objektu i učestalosti korišćenja jelovnika."],
+      ["Formati listova", "Birajte A formate, američke ili uske formate. Prije pripreme novog jelovnika izmjerite postojeći umetak i upotrebljivu površinu uz povez."],
+      ["Zaštitne folije", "Odaberite bušenu ili preklopnu foliju prema vrsti korica. Provjerite i spoljašnje dimenzije folije i format papira koji prima."]
+    ],
+    "brief": "Pošaljite fajl jelovnika ili fotografiju starog umetka, dimenzije papira, broj listova i vrstu poveza."
+  },
+  "product-sets": {
+    "title": "Usklađeni setovi za ugostiteljstvo",
+    "short": "Jelovnici i dodaci za sto usklađeni u cjelinu koja odgovara vašem objektu.",
+    "detail": "Složite set prema svom prostoru, od kafića i koktel bara do restorana, paba, picerije ili planinskog objekta.",
+    "examples": ["Setovi za restorane i planinske objekte", "Setovi za kafiće, picerije, pabove i restorane s roštiljem", "Setovi za koktel barove"],
+    "alt": "Usklađeni bordo set dodataka za ugostiteljstvo",
+    "options": [
+      ["Restorani i planinski objekti", "Uskladite jelovnike i vinske karte s mapama za račun, oznakama za rezervaciju i dodacima za sto."],
+      ["Kafići, barovi i pabovi", "Uparite karte kafe, koktela ili piva s displejima za šank, podmetačima ili QR stalcima. Odredite šta ide na šank, a šta na svaki sto."],
+      ["Zajednička završna obrada", "Ponovite ton drveta, boju kože ili način nanošenja logotipa kroz set. Provjerićemo koje su opcije dostupne za svaki proizvod."]
+    ],
+    "brief": "Opišite koncept objekta, broj stolova i šta vam treba za otvaranje ili osvježenje postojećeg prostora."
+  },
+  "samples": {
+    "title": "Uzorci materijala",
+    "short": "Mape i setovi uzoraka za poređenje materijala i završnih obrada.",
+    "detail": "Pogledajte boje i teksture uživo prije nego što izaberete završnu obradu za svoj projekat.",
+    "examples": ["Setovi uzoraka drveta, tkanine, prirodne i vještačke kože", "Kombinovani setovi", "Uzorci završnih obrada"],
+    "alt": "Uzorci kože, lana, filca i drveta",
+    "options": [
+      ["Završna obrada drveta", "Uporedite tonove i godove s namještajem ili postavkom stola. Na odabranim proizvodima dostupne su prirodne, tonirane ili premazane površine."],
+      ["Prirodna i PU koža", "Uporedite boju, teksturu i savitljivost uživo. Uzorak olakšava usklađivanje korica s tapacirungom ili postojećom mapom za račun."],
+      ["Tkanine i filc", "Uporedite boje i teksture tkanine i filca. Kombinovani set je praktičan ako birate između više grupa proizvoda."]
+    ],
+    "brief": "Recite nam koje proizvode razmatrate i koje boje ili materijale želite da uporedite. Fotografija prostora može pomoći da suzimo izbor."
+  }
+}
