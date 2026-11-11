@@ -668,6 +668,15 @@ html.lenis:has(dialog[open]) { overflow: hidden; }
   box-shadow: 0 5px 18px rgb(38 23 17 / 20%);
 }
 .folia-chat-launcher:hover { background: var(--red); }
+.folia-chat-invitation {
+  display: flex; align-items: flex-start; width: min(244px, calc(100vw - 28px));
+  background: var(--paper); color: var(--red-dark); border: 1px solid var(--line); border-left: 3px solid var(--red);
+  border-radius: 4px; box-shadow: 0 5px 18px rgb(38 23 17 / 16%);
+}
+.folia-chat-invitation button { border: 0; background: transparent; color: inherit; }
+.folia-chat-invitation-text { flex: 1; padding: 10px 0 10px 11px; font-size: 12px; font-weight: 700; line-height: 1.5; text-align: left; }
+.folia-chat-invitation-text:hover { text-decoration: underline; text-underline-offset: 3px; }
+.folia-chat-invitation-dismiss { display: grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0; }
 .folia-chat-panel {
   width: min(354px, calc(100vw - 28px)); height: min(490px, calc(100dvh - 83px));
   display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
@@ -699,6 +708,7 @@ html.lenis:has(dialog[open]) { overflow: hidden; }
 body:has(.main-nav.is-open, dialog[open]) .folia-chat { display: none; }
 @media (prefers-reduced-motion: no-preference) {
   .folia-chat[data-after-hero] { animation: folia-chat-in 280ms ease-out both; }
+  .folia-chat-invitation { animation: folia-chat-in 250ms ease-out both; }
   .folia-chat-panel { animation: folia-chat-in 180ms ease-out both; }
 }
 @keyframes folia-chat-in {

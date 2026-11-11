@@ -3,6 +3,7 @@ import type { Locale } from "../routing";
 export const chatCopy = {
   me: {
     launcher: "Pomoć pri odabiru", title: "Folia asistent", close: "Zatvori chat", send: "Pošalji",
+    prompt: "Imate pitanja? Popričajte s Folia asistentom.", dismissPrompt: "Skloni poziv za chat",
     welcome: "Zdravo! Recite mi šta vam treba za lokal. Mogu da predložim opcije iz Folia ponude i pripremim upit.",
     suggestions: ["Trebaju mi korice za jelovnike", "Zanima me QR meni", "Želim ponudu za svoj lokal"],
     input: "Napišite šta vam treba…", checking: "Povezujemo asistenta…", thinking: "Asistent odgovara…",
@@ -17,6 +18,7 @@ export const chatCopy = {
   },
   en: {
     launcher: "Help choosing", title: "Folia assistant", close: "Close chat", send: "Send",
+    prompt: "Have a question? Talk to the Folia assistant.", dismissPrompt: "Dismiss chat invitation",
     welcome: "Hi! Tell me what you need for your venue. I can suggest options from Folia’s range and help prepare an inquiry.",
     suggestions: ["I need menu covers", "I’m interested in a QR menu", "I’d like a quote for my venue"],
     input: "Tell us what you need…", checking: "Connecting the assistant…", thinking: "The assistant is replying…",
@@ -31,6 +33,7 @@ export const chatCopy = {
   },
   ru: {
     launcher: "Помощь с выбором", title: "Ассистент Folia", close: "Закрыть чат", send: "Отправить",
+    prompt: "Есть вопросы? Спросите ассистента Folia.", dismissPrompt: "Скрыть приглашение в чат",
     welcome: "Здравствуйте! Расскажите, что нужно для вашего заведения. Я помогу подобрать варианты из каталога Folia и составить запрос.",
     suggestions: ["Нужны обложки для меню", "Интересует QR-меню", "Хочу получить предложение"],
     input: "Расскажите, что вам нужно…", checking: "Подключаем ассистента…", thinking: "Ассистент готовит ответ…",

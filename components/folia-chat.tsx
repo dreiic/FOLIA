@@ -37,6 +37,7 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
   );
   const id = useId();
   const [open, setOpen] = useState(false);
+  const [prompt, setPrompt] = useState<"waiting" | "visible" | "dismissed">("waiting");
   const [availability, setAvailability] = useState<Availability>("checking");
   const [turns, setTurns] = useState<Turn[]>([]);
   const [draft, setDraft] = useState("");
@@ -49,6 +50,11 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
   const panelOpen = open && visible;
 
   useEffect(() => () => inFlight.current?.abort(), []);
+  useEffect(() => {
+    if (!visible || prompt !== "waiting") return;
+    const timer = window.setTimeout(() => setPrompt("visible"), 10_000);
+    return () => window.clearTimeout(timer);
+  }, [visible, prompt]);
   useEffect(() => {
     if (!panelOpen) return;
     closeButton.current?.focus();
@@ -68,6 +74,11 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
   function close() {
     setOpen(false);
     launcher.current?.focus();
+  }
+
+  function openChat() {
+    setPrompt("dismissed");
+    setOpen(true);
   }
 
   async function send(raw: string) {
@@ -173,8 +184,17 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
           </div>
         </section>
       )}
+      {prompt === "visible" && !open && (
+        <div className="folia-chat-invitation">
+          <button type="button" className="folia-chat-invitation-text" onClick={openChat}>{copy.prompt}</button>
+          <button type="button" className="folia-chat-invitation-dismiss" aria-label={copy.dismissPrompt} onClick={() => {
+            setPrompt("dismissed");
+            launcher.current?.focus();
+          }}><Icon name="close" width="15" height="15" /></button>
+        </div>
+      )}
       <button ref={launcher} type="button" className="folia-chat-launcher" aria-expanded={open} aria-controls={open ? id : undefined}
-        onClick={() => { if (open) close(); else setOpen(true); }}>
+        onClick={open ? close : openChat}>
         <Icon name={open ? "close" : "message"} width="19" height="19" />
         {open ? copy.close : copy.launcher}
       </button>
