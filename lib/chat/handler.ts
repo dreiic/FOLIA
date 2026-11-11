@@ -94,7 +94,7 @@ export async function handleChat(request: Request, settings: ChatSettings) {
       method: "POST",
       headers: {
         "x-api-key": settings.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
+        "anthropic-version": "2026-10-21",
         "content-type": "application/json",
       },
       signal: AbortSignal.timeout(20_000),
@@ -116,13 +116,19 @@ export async function handleChat(request: Request, settings: ChatSettings) {
       }),
     });
     if (!upstream.ok) {
-      console.warn("Folia chat provider rejected the request", upstream.status);
-      return json({ error: "unavailable" }, 503);
+      const details = await upstream.json().catch(() => null) as { error?: { message?: string } } | null;
+      const message = details?.error?.message ?? "";
+      const reason = upstream.status === 401 || upstream.status === 403 ? "provider_access"
+        : upstream.status === 402 || /credit balance|billing|payment/i.test(message) ? "provider_billing"
+        : upstream.status === 400 || upstream.status === 404 ? "provider_configuration"
+        : upstream.status === 429 ? "provider_limit" : "provider_unavailable";
+      console.warn("Folia chat provider rejected the request", upstream.status, reason);
+      return json({ error: reason }, 503);
     }
 
     const result = await upstream.json() as { content?: { type: string; text?: string }[] };
     const generated = result.content?.find(({ type }) => type === "text")?.text;
-    if (!generated) return json({ error: "unavailable" }, 503);
+    if (!generated) return json({ error: "provider_reply" }, 503);
 
     const parsed = JSON.parse(generated) as { reply?: unknown; brief?: unknown; linkIds?: unknown };
     const reply = typeof parsed.reply === "string" ? parsed.reply.trim() : "";
