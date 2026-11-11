@@ -1,13 +1,14 @@
 "use client";
 
 import type { Messages } from "../lib/localized-content";
-import { localizedPath, locales, parseSegments, type Locale } from "../lib/routing";
+import { localizedPath, parseSegments, type Locale } from "../lib/routing";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { studio } from "../lib/content";
 import { ContactDetails } from "./contact-details";
 import { Icon } from "./icons";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function Wordmark() {
   return <span className="wordmark" aria-hidden="true" />;
@@ -23,7 +24,6 @@ const serverHasScrolled = () => false;
 
 export function Header({ locale, t, collectionLinks }: { locale: Locale; t: Messages; collectionLinks: { id: string; title: string }[] }) {
   const pathname = usePathname();
-  const router = useRouter();
   const { path } = parseSegments(pathname.split("/").filter(Boolean));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -90,23 +90,12 @@ export function Header({ locale, t, collectionLinks }: { locale: Locale; t: Mess
           </div>
           <Link href={localizedPath(locale, "/about")} onClick={closeNavigation} aria-current={path === "/about" ? "page" : undefined}>{t.about}</Link>
           <Link href={localizedPath(locale, "/contact")} onClick={closeNavigation} aria-current={path === "/contact" ? "page" : undefined}>{t.contact}</Link>
+          <LanguageSwitcher key={`${locale}:${path}`} locale={locale} path={path} label={t.language} onSelect={closeNavigation} />
           <a href={studio.whatsapp} target="_blank" rel="noreferrer" className="mobile-contact">{t.talkWhatsApp} <Icon name="arrow" width="16" height="16" /></a>
         </nav>
-        <div className="header-end">
-          <a className="header-contact" href={studio.whatsapp} target="_blank" rel="noreferrer">
-            <Icon name="whatsapp" width="18" height="18" /> {t.talk}
-          </a>
-          <div className="language-picker">
-            <span aria-hidden="true">{locales.find(({ id }) => id === locale)?.short} <Icon name="chevron" width="13" height="13" /></span>
-            <select aria-label={t.language} value={locale} onChange={(event) => {
-              const next = event.target.value as Locale;
-              closeNavigation();
-              router.push(localizedPath(next, path) + window.location.search + window.location.hash);
-            }}>
-              {locales.map(({ id, lang, label }) => <option key={id} value={id} lang={lang}>{label}</option>)}
-            </select>
-          </div>
-        </div>
+        <a className="header-contact" href={studio.whatsapp} target="_blank" rel="noreferrer">
+          <Icon name="whatsapp" width="18" height="18" /> {t.talk}
+        </a>
       </div>
     </header>
   );

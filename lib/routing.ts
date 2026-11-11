@@ -1,5 +1,5 @@
 export const locales = [
-  { id: "me", lang: "cnr", label: "Crnogorski", short: "CG" },
+  { id: "me", lang: "cnr", label: "Crnogorski", short: "MNE" },
   { id: "en", lang: "en", label: "English", short: "EN" },
   { id: "ru", lang: "ru", label: "Русский", short: "RU" },
 ] as const;
