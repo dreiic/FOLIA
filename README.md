@@ -36,7 +36,7 @@ The existing `POST /api/inquiry` integration remains available for future server
 
 ## Folia assistant
 
-Set the encrypted `ANTHROPIC_API_KEY` secret on the production `folia` Cloudflare Worker. The optional `FOLIA_CHAT_MODEL` variable overrides the default Claude Haiku model. For local Next.js development, use an ignored `.env.local`; for local Wrangler development, use an ignored `.env.local` or supply the secret as a runtime environment variable.
+Set the encrypted `ANTHROPIC_API_KEY` secret on the production `folia` Cloudflare Worker. Use a key scoped to one Claude workspace, or set `ANTHROPIC_WORKSPACE_ID` with the selected workspace ID. The optional `FOLIA_CHAT_MODEL` variable overrides the default Claude Haiku model. For local Next.js development, use an ignored `.env.local`; for local Wrangler development, use an ignored `.env.local` or supply the secret as a runtime environment variable.
 
 The assistant uses the Folia collection guides, catalogue models and portfolio. Update `lib/chat/catalog-reference.json` when the PDF model codes change. The Worker limits requests, keeps the provider key server-side, and stores no chat history. Visitors can choose to send a prepared inquiry through WhatsApp or email. The widget offers both contact links when chat is unavailable.
 

@@ -4,6 +4,7 @@ import { chatHistoryLimit, chatInputLimit, type ChatMessage, type ChatReply } fr
 
 export type ChatSettings = {
   ANTHROPIC_API_KEY?: string;
+  ANTHROPIC_WORKSPACE_ID?: string;
   FOLIA_CHAT_MODEL?: string;
   CHAT_RATE_LIMIT?: { limit(options: { key: string }): Promise<{ success: boolean }> };
 };
@@ -98,6 +99,7 @@ export async function handleChat(request: Request, settings: ChatSettings) {
         "x-api-key": settings.ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01",
         "content-type": "application/json",
+        ...(settings.ANTHROPIC_WORKSPACE_ID && { "anthropic-workspace-id": settings.ANTHROPIC_WORKSPACE_ID.trim() }),
       },
       signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
@@ -110,20 +112,13 @@ export async function handleChat(request: Request, settings: ChatSettings) {
     if (!upstream.ok) {
       const details = await upstream.json().catch(() => null) as { error?: { message?: string } } | null;
       const message = details?.error?.message ?? "";
-      const reason = upstream.status === 401 || upstream.status === 403 || /organization.*(?:disabled|restricted)/i.test(message) ? "provider_access"
+      const reason = /anthropic-workspace-id|workspace.*not found/i.test(message) ? "provider_workspace"
+        : upstream.status === 401 || upstream.status === 403 || /organization.*(?:disabled|restricted)/i.test(message) ? "provider_access"
         : upstream.status === 402 || /credits?|billing|payment|balance|spend.limit/i.test(message) ? "provider_billing"
         : upstream.status === 404 || /model.*(?:not found|not available|invalid|retired)/i.test(message) ? "provider_model"
         : upstream.status === 400 ? "provider_request"
         : upstream.status === 429 ? "provider_limit" : "provider_unavailable";
       console.warn("Folia chat provider rejected the request", upstream.status, reason);
-      const probe = request.headers.get("x-folia-diagnostics");
-      if (probe && probe.length <= 100) {
-        const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(probe));
-        const fingerprint = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
-        if (fingerprint === "201020b4e8a4b101644e7687d3c154ab31fa086ba0377bfb777cfac2abe00978") {
-          return json({ error: reason, status: upstream.status, message: message.replace(/sk-ant-[\w-]+/g, "[redacted]").slice(0, 250) }, 503);
-        }
-      }
       return json({ error: reason }, 503);
     }
 
