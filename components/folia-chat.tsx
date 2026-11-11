@@ -99,7 +99,7 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ locale, messages: [...history, { role: "user", content: question }] }),
+        body: JSON.stringify({ locale, previousBrief: brief, messages: [...history, { role: "user", content: question }] }),
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(25_000)]),
       });
       if (!response.ok) {
@@ -157,6 +157,14 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
                 {answer && (
                   <div className="folia-chat-answer">
                     <p className="folia-chat-bubble">{answer.reply}</p>
+                    {answer.handoff && (
+                      <div className="folia-chat-handoff">
+                        <a className="button button-primary" href={emailUrl(copy.subject, inquiry)}>
+                          <Icon name="mail" width="17" height="17" />{copy.handoffEmail}
+                        </a>
+                        <p>{copy.handoffNote}</p>
+                      </div>
+                    )}
                     {answer.links.length > 0 && (
                       <div className="folia-chat-links">
                         {answer.links.map(({ href, label }) => <Link key={href} href={href} className="text-link" onClick={close}>{label} <Icon name="arrow" width="15" height="15" /></Link>)}
@@ -186,7 +194,10 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
       )}
       {prompt === "visible" && !open && (
         <div className="folia-chat-invitation">
-          <button type="button" className="folia-chat-invitation-text" onClick={openChat}>{copy.prompt}</button>
+          <button type="button" className="folia-chat-invitation-text" onClick={openChat}>
+            <Icon name="message" className="folia-chat-invitation-icon" width="22" height="22" />
+            <span>{copy.prompt}<span className="folia-chat-invitation-action">{copy.openPrompt} <Icon name="arrow" width="15" height="15" /></span></span>
+          </button>
           <button type="button" className="folia-chat-invitation-dismiss" aria-label={copy.dismissPrompt} onClick={() => {
             setPrompt("dismissed");
             launcher.current?.focus();

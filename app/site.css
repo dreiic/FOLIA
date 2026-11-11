@@ -677,6 +677,18 @@ html.lenis:has(dialog[open]) { overflow: hidden; }
 .folia-chat-invitation-text { flex: 1; padding: 10px 0 10px 11px; font-size: 12px; font-weight: 700; line-height: 1.5; text-align: left; }
 .folia-chat-invitation-text:hover { text-decoration: underline; text-underline-offset: 3px; }
 .folia-chat-invitation-dismiss { display: grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0; }
+.folia-chat-invitation-icon, .folia-chat-invitation-action { display: none; }
+@media (min-width: 761px) {
+  .folia-chat-invitation {
+    width: min(328px, calc(100vw - 48px)); background: var(--red-dark); color: var(--white);
+    border: 1px solid var(--red); box-shadow: 0 9px 28px rgb(38 23 17 / 24%);
+  }
+  .folia-chat-invitation-text { display: flex; align-items: flex-start; gap: 12px; padding: 16px 0 15px 15px; font-size: 15px; line-height: 1.35; }
+  .folia-chat-invitation-text:hover { text-decoration: none; }
+  .folia-chat-invitation-icon { display: block; margin-top: 2px; }
+  .folia-chat-invitation-action { display: flex; align-items: center; gap: 6px; margin-top: 7px; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+  .folia-chat-invitation :focus-visible { outline-offset: -3px; }
+}
 .folia-chat-panel {
   width: min(354px, calc(100vw - 28px)); height: min(490px, calc(100dvh - 83px));
   display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
@@ -696,6 +708,9 @@ html.lenis:has(dialog[open]) { overflow: hidden; }
 .folia-chat-suggestions button:hover { border-color: var(--red); }
 .folia-chat-links { display: grid; padding-left: 4px; }
 .folia-chat-links .text-link { min-height: 34px; justify-content: start; }
+.folia-chat-handoff { display: grid; justify-items: start; gap: 5px; padding-top: 8px; }
+.folia-chat-handoff .button { padding: 8px 12px; min-height: 40px; }
+.folia-chat-handoff p { font-size: 11px; }
 .folia-chat-controls { border-top: 1px solid var(--line); padding: 9px 12px 10px; background: var(--white); }
 .folia-chat-form { display: flex; gap: 7px; }
 .folia-chat-form input { flex: 1; min-width: 0; padding: 7px 9px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); color: var(--ink); font-size: 16px; }
