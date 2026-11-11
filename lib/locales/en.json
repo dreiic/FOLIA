@@ -152,5 +152,17 @@
   "quoteBody": "Tell us what you need. We’ll suggest options and put together a quote for your venue.",
   "quoteAction": "Get a quote on WhatsApp",
   "quoteDismiss": "Dismiss quote reminder",
-  "quoteMessage": "Hi! I’d like a quote for my venue. Could you help me choose the right options?"
+  "quoteMessage": "Hi! I’d like a quote for my venue. Could you help me choose the right options?",
+  "privacyTitle": "Privacy Policy",
+  "privacyIntro": "Folia, based in Podgorica, uses the information you send us to answer inquiries, share our catalog, or prepare a quote.",
+  "privacyInquiryTitle": "Inquiry information",
+  "privacyInquiry": "When you get in touch, we receive the contact details you use and any information you send, such as your venue name, the products you’re interested in, and project details. The website form prepares a draft. We receive your inquiry when you send it by WhatsApp or email.",
+  "privacyServicesTitle": "Hosting and communication",
+  "privacyServices": "Our hosting, email, and WhatsApp providers may process information needed to serve the website, handle sign-in when enabled, and deliver messages. When you open WhatsApp or another external service, that service’s privacy policy applies to your use of it.",
+  "privacyStorageTitle": "Browser storage",
+  "privacyStorage": "The Folia website does not use visitor analytics or advertising pixels. When you dismiss the quote reminder or use it to open WhatsApp, the website remembers that choice in the current tab so the reminder stays hidden during that session.",
+  "privacyRetentionTitle": "How long we keep inquiries",
+  "privacyRetention": "We keep correspondence for as long as needed to answer your inquiry and arrange or carry out the work. Where the law requires us to keep certain records for longer, those retention periods apply.",
+  "privacyRightsTitle": "Your rights and contact",
+  "privacyRights": "For questions about how we handle your data or to request access, correction, or deletion, email us at the address below. You can also contact Montenegro’s Agency for Personal Data Protection and Free Access to Information."
 }

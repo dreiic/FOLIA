@@ -8,6 +8,7 @@ import CollectionPage from "../../views/collection";
 import Contact from "../../views/contact";
 import Home from "../../views/home";
 import Products from "../../views/products";
+import Privacy from "../../views/privacy";
 
 type PageProps = { params: Promise<{ segments?: string[] }> };
 
@@ -18,10 +19,11 @@ const pages = {
   "/products": Products,
   "/about": About,
   "/contact": Contact,
+  "/privacy": Privacy,
 };
 
 export function generateStaticParams() {
-  const paths = [[], ["products"], ["about"], ["contact"], ...collections.map(({ id }) => ["products", id])];
+  const paths = [[], ["products"], ["about"], ["contact"], ["privacy"], ...collections.map(({ id }) => ["products", id])];
   return locales.flatMap(({ id }) => paths.map((parts) => ({
     segments: id === "me" ? parts : [id, ...parts],
   })));
@@ -36,6 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     "/products": [t.productsMeta, t.productsDescription],
     "/about": [t.aboutMeta, t.aboutDescription],
     "/contact": [t.contactMeta, t.contactDescription],
+    "/privacy": [t.privacyTitle, t.privacyIntro],
   };
   const [name, description] = collection ? [collection.title, collection.short] : titles[path] ?? [t.notFound, ""];
   const title = path === "/" ? `FOLIA | ${name}` : `${name} | FOLIA`;

@@ -152,5 +152,17 @@
   "quoteBody": "Recite nam šta vam treba. Predložićemo opcije i pripremiti ponudu po mjeri.",
   "quoteAction": "Zatražite ponudu na WhatsAppu",
   "quoteDismiss": "Zatvori podsjetnik za ponudu",
-  "quoteMessage": "Zdravo! Zanima me ponuda za moj ugostiteljski objekat. Možete li mi pomoći oko izbora?"
+  "quoteMessage": "Zdravo! Zanima me ponuda za moj ugostiteljski objekat. Možete li mi pomoći oko izbora?",
+  "privacyTitle": "Politika privatnosti",
+  "privacyIntro": "Folia iz Podgorice koristi podatke koje nam pošaljete da odgovori na upit, dostavi katalog ili pripremi ponudu.",
+  "privacyInquiryTitle": "Podaci iz upita",
+  "privacyInquiry": "Kad nam pišete, primamo kontakt podatke koje koristite i sadržaj koji pošaljete, kao što su naziv objekta, proizvodi koji vas zanimaju i detalji projekta. Forma na sajtu priprema nacrt poruke. Upit primamo tek kad ga pošaljete preko WhatsAppa ili mejla.",
+  "privacyServicesTitle": "Hosting i komunikacija",
+  "privacyServices": "Pružaoci hostinga, mejla i WhatsAppa mogu obrađivati podatke potrebne za prikaz sajta, prijavu kad je uključena i dostavu poruka. Kad otvorite WhatsApp ili drugi spoljni servis, na korišćenje tog servisa primjenjuju se njegova pravila privatnosti.",
+  "privacyStorageTitle": "Čuvanje podataka u browseru",
+  "privacyStorage": "Folia sajt ne koristi analitiku posjeta niti reklamne piksele. Kad zatvorite podsjetnik za ponudu ili preko njega otvorite WhatsApp, sajt u trenutnom tabu pamti samo da podsjetnik ne prikaže ponovo tokom te sesije.",
+  "privacyRetentionTitle": "Koliko čuvamo upite",
+  "privacyRetention": "Prepisku čuvamo koliko je potrebno da odgovorimo na upit i dogovorimo ili realizujemo saradnju. Ako propisi zahtijevaju duže čuvanje određene dokumentacije, primjenjujemo zakonske rokove.",
+  "privacyRightsTitle": "Vaša prava i kontakt",
+  "privacyRights": "Za pitanja o obradi podataka ili zahtjev za pristup, ispravku ili brisanje podataka pišite nam na adresu ispod. Možete se obratiti i Agenciji za zaštitu ličnih podataka i slobodan pristup informacijama Crne Gore."
 }

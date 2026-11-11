@@ -117,6 +117,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
             <Link href={`${localizedPath(locale)}#design-digital`}>{t.designDigital}</Link>
             <Link href={localizedPath(locale, "/about")}>{t.studio}</Link>
             <Link href={localizedPath(locale, "/contact")}>{t.contact}</Link>
+            <Link href={localizedPath(locale, "/privacy")}>{t.privacyTitle}</Link>
           </nav>
           <div className="footer-contacts"><ContactDetails t={t} compact /></div>
         </div>

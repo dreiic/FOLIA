@@ -34,7 +34,7 @@ export default async function RootLayout({ children, params }: {
           <Header locale={locale} t={t} collectionLinks={collections.map(({ id, title }) => ({ id, title }))} />
           <main id="main" tabIndex={-1}>{children}</main>
           <Footer locale={locale} t={t} />
-          {path !== "/contact" && (
+          {path !== "/contact" && path !== "/privacy" && (
             <QuoteReminder
               key={`${locale}:${path}`}
               isHome={path === "/"}

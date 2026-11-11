@@ -1,5 +1,6 @@
 import { getContent } from "../lib/localized-content";
-import type { Locale } from "../lib/routing";
+import { localizedPath, type Locale } from "../lib/routing";
+import Link from "next/link";
 import { ContactDetails } from "../components/contact-details";
 import { Eyebrow, Photo } from "../components/editorial";
 import { ProjectInquiry } from "../components/project-inquiry";
@@ -21,6 +22,7 @@ export default function Contact({ locale }: { locale: Locale }) {
             <Eyebrow>{t.yourProject}</Eyebrow>
             <h2>{t.yourIdea}</h2>
             <ProjectInquiry t={t} collectionTitles={collections.map(({ title }) => title)} menuDesign={services[0].title} websiteDesign={t.websiteDesign} />
+            <Link href={localizedPath(locale, "/privacy")} className="text-link">{t.privacyTitle}</Link>
           </div>
         </div>
       </section>
