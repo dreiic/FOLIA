@@ -10,6 +10,7 @@ import { CatalogButton } from "../components/inquiry-form";
 import { Icon } from "../components/icons";
 import { OrganizationData } from "../components/structured-data";
 import { menuDesignPath } from "../lib/seo";
+import { PortfolioPreview } from "./portfolio";
 
 export default function Home({ locale }: { locale: Locale }) {
   const { t, collections, editorial, materials, services } = getContent(locale);
@@ -49,6 +50,8 @@ export default function Home({ locale }: { locale: Locale }) {
           </CollectionRail>
         </div>
       </section>
+
+      <PortfolioPreview locale={locale} />
 
       <section className="venue-banner">
         <Photo image={editorial.dining} className="venue-background" sizes="100vw" />

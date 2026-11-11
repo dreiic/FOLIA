@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { collections } from "../../lib/content";
 import { landingContent, landingKinds } from "../../lib/landing-content";
 import { getContent } from "../../lib/localized-content";
+import { portfolioExamples } from "../../lib/portfolio";
 import { locales, parseSegments } from "../../lib/routing";
 import { alternatePageUrls, montenegroSearchCopy, pageUrl, sitePagePaths } from "../../lib/seo";
 import About from "../../views/about";
@@ -10,6 +11,7 @@ import CollectionPage from "../../views/collection";
 import Contact from "../../views/contact";
 import Home from "../../views/home";
 import Landing from "../../views/landing";
+import Portfolio from "../../views/portfolio";
 import Products from "../../views/products";
 import Privacy from "../../views/privacy";
 
@@ -20,6 +22,7 @@ export const dynamicParams = false;
 const pages = {
   "/": Home,
   "/products": Products,
+  "/portfolio": Portfolio,
   "/about": About,
   "/contact": Contact,
   "/privacy": Privacy,
@@ -41,6 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const titles: Record<string, [string, string]> = {
     "/": [t.homeMeta, t.homeDescription],
     "/products": [t.productsMeta, t.productsDescription],
+    "/portfolio": [t.portfolioMeta, t.portfolioDescription],
     "/about": [t.aboutMeta, t.aboutDescription],
     "/contact": [t.contactMeta, t.contactDescription],
     "/privacy": [t.privacyTitle, t.privacyIntro],
@@ -50,7 +54,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : collection ? [collection.title, collection.short] : titles[path] ?? [t.notFound, ""]);
   const title = path === "/" ? `FOLIA | ${name}` : `${name} | FOLIA`;
   const canonical = pageUrl(locale, path);
-  const image = kind === "menuDesign" ? services.find(({ id }) => id === "menu-design")?.image
+  const [portfolioFeature] = portfolioExamples;
+  const image = path === "/portfolio"
+    ? { src: `/portfolio/${portfolioFeature.id}.webp`, alt: portfolioFeature.captions[locale][2] ?? portfolioFeature.captions[locale][0] }
+    : kind === "menuDesign" ? services.find(({ id }) => id === "menu-design")?.image
     : kind === "waiterFolders" ? collections.find(({ id }) => id === "restaurant-accessories")?.image : collection?.image;
   return {
     title,

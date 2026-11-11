@@ -7,7 +7,7 @@ export const menuDesignPath = "/services/menu-design";
 export const waiterFoldersPath = "/products/waiter-folders";
 
 export const sitePagePaths = [
-  "/", "/products", "/about", "/contact", "/privacy", menuDesignPath, waiterFoldersPath,
+  "/", "/products", "/portfolio", "/about", "/contact", "/privacy", menuDesignPath, waiterFoldersPath,
   ...collections.map(({ id }) => `/products/${id}`),
 ];
 

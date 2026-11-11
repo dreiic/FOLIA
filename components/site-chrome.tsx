@@ -88,6 +88,7 @@ export function Header({ locale, t, collectionLinks }: { locale: Locale; t: Mess
               </div>
             )}
           </div>
+          <Link href={localizedPath(locale, "/portfolio")} onClick={closeNavigation} aria-current={path === "/portfolio" ? "page" : undefined}>{t.portfolio}</Link>
           <Link href={localizedPath(locale, "/about")} onClick={closeNavigation} aria-current={path === "/about" ? "page" : undefined}>{t.about}</Link>
           <Link href={localizedPath(locale, "/contact")} onClick={closeNavigation} aria-current={path === "/contact" ? "page" : undefined}>{t.contact}</Link>
           <LanguageSwitcher key={`${locale}:${path}`} locale={locale} path={path} label={t.language} onSelect={closeNavigation} />
@@ -114,6 +115,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
           <nav className="footer-nav" aria-label={t.footerNavigation}>
             <span className="method-label">{t.explore}</span>
             <Link href={localizedPath(locale, "/products")}>{t.collections}</Link>
+            <Link href={localizedPath(locale, "/portfolio")}>{t.portfolio}</Link>
             <Link href={`${localizedPath(locale)}#design-digital`}>{t.designDigital}</Link>
             <Link href={localizedPath(locale, "/about")}>{t.studio}</Link>
             <Link href={localizedPath(locale, "/contact")}>{t.contact}</Link>

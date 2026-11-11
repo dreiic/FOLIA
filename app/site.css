@@ -622,3 +622,60 @@ body:has(.main-nav.is-open, dialog[open]) .quote-reminder-region { display: none
 .privacy-page > p { margin-top: 18px; }
 .privacy-page section { margin-top: 32px; }
 .privacy-page h2 { font-size: clamp(25px, 3.5vw, 35px); margin-bottom: 8px; }
+
+/* Portfolio */
+.home-portfolio { background: var(--beige); }
+.portfolio-intro {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(26px, 6vw, 105px);
+  padding-block: clamp(46px, 7vw, 102px);
+}
+.portfolio-copy :is(h1, h2) { margin-top: 12px; max-width: 12ch; }
+.portfolio-copy > p:not(.eyebrow) { margin-top: 18px; max-width: 44ch; }
+.portfolio-copy > .text-link { margin-top: 14px; }
+.portfolio-photo { aspect-ratio: 4 / 5; background: #e2d6c7; }
+.portfolio-intro .portfolio-photo { aspect-ratio: 3 / 2; }
+.portfolio-photo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+.portfolio-masthead figcaption { margin-top: 4px; }
+.portfolio-gallery { padding-block: clamp(48px, 6vw, 92px); }
+.portfolio-gallery-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.portfolio-gallery-heading nav { display: flex; flex-wrap: wrap; gap: 0 22px; }
+.portfolio-group { padding-top: clamp(28px, 4vw, 58px); }
+.portfolio-group + .portfolio-group { margin-top: clamp(24px, 4vw, 60px); border-top: 1px solid var(--line); }
+.portfolio-group > h3 { font-size: clamp(33px, 3.5vw, 51px); margin-bottom: 22px; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3.6vw, 55px) clamp(14px, 2.8vw, 44px); }
+.portfolio-entry { min-width: 0; }
+.portfolio-caption { padding-top: 14px; }
+.portfolio-caption h4 { margin: 0; font: 400 clamp(25px, 2.45vw, 36px)/1.07 var(--serif); }
+.portfolio-caption p { margin-top: 8px; font-size: 13px; }
+.portfolio-caption .text-link { justify-content: flex-start; }
+.portfolio-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: clamp(52px, 6vw, 94px);
+}
+.portfolio-contact h2 { max-width: 17ch; }
+@media (max-width: 900px) {
+  .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .portfolio-intro { grid-template-columns: minmax(0, 1fr); }
+  .portfolio-copy h1 { font-size: clamp(48px, 9vw, 60px); }
+  .portfolio-gallery-heading nav { gap: 0 14px; }
+}
+@media (max-width: 460px) {
+  .portfolio-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
