@@ -1,5 +1,7 @@
 import { getContent } from "../lib/localized-content";
-import type { Locale } from "../lib/routing";
+import Link from "next/link";
+import { localizedPath, type Locale } from "../lib/routing";
+import { menuDesignPath, waiterFoldersPath } from "../lib/seo";
 import { CollectionCard } from "../components/collection-card";
 import { CollectionRail } from "../components/collection-rail";
 import { CatalogCallout, Eyebrow, Photo } from "../components/editorial";
@@ -60,6 +62,8 @@ export default function Products({ locale }: { locale: Locale }) {
                 return <li key={collectionId}><CollectionCard locale={locale} collection={collection} sizes="(max-width: 680px) 80vw, 40vw" /></li>;
               })}
             </CollectionRail>
+            {id === "menu-presentation" && <Link className="text-link" href={localizedPath(locale, menuDesignPath)}>{t.menuDesignDetails} <Icon name="arrow" /></Link>}
+            {id === "table-details" && <Link className="text-link" href={localizedPath(locale, waiterFoldersPath)}>{t.waiterFolderDetails} <Icon name="arrow" /></Link>}
           </div>
         </section>
       ))}

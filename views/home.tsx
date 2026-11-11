@@ -8,6 +8,8 @@ import { CollectionCard } from "../components/collection-card";
 import { CollectionRail } from "../components/collection-rail";
 import { CatalogButton } from "../components/inquiry-form";
 import { Icon } from "../components/icons";
+import { OrganizationData } from "../components/structured-data";
+import { menuDesignPath } from "../lib/seo";
 
 export default function Home({ locale }: { locale: Locale }) {
   const { t, collections, editorial, materials, services } = getContent(locale);
@@ -15,6 +17,7 @@ export default function Home({ locale }: { locale: Locale }) {
 
   return (
     <>
+      {locale === "me" && <OrganizationData />}
       <ParallaxHero business={t.business} discover={t.discover} />
       <section className="shell hero-introduction" id="hero-introduction">
         <div>
@@ -70,9 +73,13 @@ export default function Home({ locale }: { locale: Locale }) {
               <h3>{service.title}</h3>
               <p>{service.copy}</p>
               <ul className="service-points">{service.points.map((point) => <li key={point}>{point}</li>)}</ul>
-              <a href={whatsappUrl(service.message)} className="text-link" target="_blank" rel="noreferrer">
-                {service.id === "qr-menus" ? t.qrServiceLink : service.id === "website-design" ? t.webServiceLink : t.menuServiceLink} <Icon name="arrow" width="18" height="18" />
-              </a>
+              <div className="actions">
+                {service.id === "menu-design" && <Link className="text-link" href={localizedPath(locale, menuDesignPath)}>{t.menuDesignDetails} <Icon name="arrow" /></Link>}
+                {service.id === "qr-menus" && <Link className="text-link" href={localizedPath(locale, "/products/digital-menus")}>{t.qrMenuDetails} <Icon name="arrow" /></Link>}
+                <a href={whatsappUrl(service.message)} className="text-link" target="_blank" rel="noreferrer">
+                  {service.id === "qr-menus" ? t.qrServiceLink : service.id === "website-design" ? t.webServiceLink : t.menuServiceLink} <Icon name="arrow" width="18" height="18" />
+                </a>
+              </div>
             </div>
           </article>
         ))}

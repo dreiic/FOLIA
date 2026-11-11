@@ -11,10 +11,11 @@ import { Footer, Header } from "../../components/site-chrome";
 import { whatsappUrl } from "../../lib/content";
 import { getContent } from "../../lib/localized-content";
 import { locales, parseSegments } from "../../lib/routing";
+import { siteOrigin } from "../../lib/seo";
 import "../site.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_FOLIA_SITE_URL || "https://folia-hospitality-studio.downyhinny16.chatgpt.site"),
+  metadataBase: new URL(siteOrigin),
   icons: { icon: "/editorial/folia-icon.png" },
 };
 

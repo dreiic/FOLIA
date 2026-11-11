@@ -5,6 +5,8 @@ import { Eyebrow, LeadActions, Photo } from "../components/editorial";
 import { CollectionCard } from "../components/collection-card";
 import { CatalogButton } from "../components/inquiry-form";
 import { Icon } from "../components/icons";
+import { BreadcrumbData } from "../components/structured-data";
+import { menuDesignPath, waiterFoldersPath } from "../lib/seo";
 
 export default function CollectionPage({ locale, slug }: { locale: Locale; slug: string }) {
   const { t, collections, editorial } = getContent(locale);
@@ -14,6 +16,10 @@ export default function CollectionPage({ locale, slug }: { locale: Locale; slug:
 
   return (
     <>
+      <BreadcrumbData locale={locale} items={[
+        { name: t.collections, path: "/products" },
+        { name: collection.title, path: `/products/${slug}` },
+      ]} />
       <div className="shell breadcrumb">
         <Link href={localizedPath(locale, "/products")}>{t.collections}</Link><span aria-hidden="true">/</span><span>{collection.title}</span>
       </div>
@@ -32,6 +38,8 @@ export default function CollectionPage({ locale, slug }: { locale: Locale; slug:
           <ul className="product-guide-examples">
             {collection.examples.map((example) => <li key={example}>{example}</li>)}
           </ul>
+          {slug === "restaurant-accessories" && <Link className="text-link" href={localizedPath(locale, waiterFoldersPath)}>{t.waiterFolderDetails} <Icon name="arrow" /></Link>}
+          {(slug === "digital-menus" || slug === "menu-covers") && <Link className="text-link" href={localizedPath(locale, menuDesignPath)}>{t.menuDesignDetails} <Icon name="arrow" /></Link>}
         </div>
         <dl className="product-specifications">
           {guide.options.map(({ label, description }) => (
