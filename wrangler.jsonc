@@ -3,6 +3,9 @@
   "name": "folia",
   "main": "dist/server/index.js",
   "compatibility_date": "2026-11-10",
+  "vars": {
+    "FOLIA_INQUIRY_FROM": "upiti@foliadesign.me"
+  },
   "build": {
     "command": "npm run build:sites"
   },
