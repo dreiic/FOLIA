@@ -1,7 +1,7 @@
 import { collections } from "./content";
 import { locales, localizedPath, type Locale } from "./routing";
 
-export const siteOrigin = new URL(process.env.NEXT_PUBLIC_FOLIA_SITE_URL || "https://foliadesign.me").origin;
+export const siteOrigin = "https://foliadesign.me";
 
 export const menuDesignPath = "/services/menu-design";
 export const waiterFoldersPath = "/products/waiter-folders";
