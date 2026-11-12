@@ -12,11 +12,15 @@
   "ratelimits": [
     { "name": "CHAT_RATE_LIMIT", "namespace_id": "44261", "simple": { "limit": 8, "period": 60 } }
   ],
+  "durable_objects": {
+    "bindings": [{ "name": "CHAT_SESSIONS", "class_name": "FoliaChatSession" }]
+  },
+  "migrations": [{ "tag": "chat-sessions-v1", "new_sqlite_classes": ["FoliaChatSession"] }],
   "assets": {
     "directory": "dist/client",
     "binding": "ASSETS",
     "html_handling": "force-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/inquiry", "/api/inquiry/", "/api/chat", "/api/chat/"]
+    "run_worker_first": ["/api/inquiry", "/api/inquiry/", "/api/chat", "/api/chat/", "/api/chat-session", "/api/chat-session/"]
   }
 }

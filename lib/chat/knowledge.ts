@@ -4,22 +4,6 @@ import { getContent } from "../localized-content";
 import { portfolioExamples, portfolioGallery } from "../portfolio";
 import { localizedPath, type Locale } from "../routing";
 import catalogReference from "./catalog-reference.json";
-import type { ChatMessage } from "./types";
-
-const topics: Record<string, string> = {
-  "menu-covers": "koric jelovnik vinska karta koža kozn kožn emboss cover binding leather vegan бланк обложк кож",
-  "menu-boards": "daska daske podlog clipboard menu board clip prsten планшет зажим",
-  "menu-holders": "stalak stalci držač drzac displej table tent holder display подставк держател",
-  "menu-inserts": "umetak umetci listov folij perforac print insert sleeve вкладыш лист файл",
-  "digital-menus": "qr nfc skenir telefon digital link akril contactless scan меню код бесконтакт",
-  "restaurant-accessories": "račun racun konobar narudžben rezervacij napkin bill check presenter waiter reserve счёт счет официант резерв",
-  "hotel-guest-folders": "hotel gost sob recepcij room guest directory отел гост номер",
-  "signage": "oznak putokaz broj pločic signage sign directional табличк указател",
-  "wall-menu-boards": "zid šina sina šank rail wall board magnetic настенн рейк",
-  "table-service": "podmetač podmetac posluživ servir pribor tacn coaster placemat serving cutlery поднос сервиров подставк",
-  "product-sets": "komplet set upar usklad matching coordinated комплект набор",
-  samples: "uzor swatch sample materijal boja образц материал цвет",
-};
 
 const productNotes = [
   "PDF material families: Crazy Horse and Capri leather, plywood, PU leather, and fabric. Shade ranges include Bordeaux, cognac, black, blue and green in selected leather lines, and oak, walnut, cypress, rosewood and wenge among wood finishes. Color, stock and suitability vary by model and are confirmed by Folia. Screen colours are approximate.",
@@ -31,36 +15,16 @@ const productNotes = [
   "For care, offer general guidance only: avoid soaking or abrasive cleaners and ask Folia to confirm the method for the exact finish. Avoid waterproof, food-safe, sustainable or warranty claims unless Folia explicitly confirms them for the particular product.",
 ];
 
-function normalize(value: string) {
-  return value.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
-}
-
-export function getChatKnowledge(locale: Locale, messages: ChatMessage[]) {
+export function getChatKnowledge(locale: Locale) {
   const { t, collections, services } = getContent(locale);
-  const items = { ...catalogModels } as Record<string, string[]>;
-  const references = { ...catalogReference } as Record<string, string[][]>;
-  const recent = messages.filter(({ role }) => role === "user").slice(-4);
-  const query = normalize(recent.map(({ content }) => content).join(" "));
-  const latest = normalize(recent.at(-1)?.content ?? "");
-  const tokens = [...new Set(query.match(/[\p{L}\p{N}_-]{3,}/gu) ?? [])];
-  const primary = collections.map(({ id }, index) => ({
-    id,
-    score: normalize(topics[id] ?? "").split(" ").filter(Boolean).reduce(
-      (sum, token) => sum + (latest.includes(token) ? 3 : query.includes(token) ? 1 : 0), 0,
-    ) + (references[id]?.some(([code]) => tokens.includes(normalize(code))) ? 10 : 0),
-    index,
-  })).sort((a, b) => b.score - a.score || a.index - b.index).slice(0, 4).map(({ id }) => id);
+  const items: Record<string, string[]> = catalogModels;
+  const references: Record<string, string[][]> = catalogReference;
 
   const portfolio = [...portfolioExamples.slice(0, 1), ...portfolioGallery];
   const links: Record<string, { href: string; label: string }> = {};
   const facts = collections.map(({ id, title, detail, examples, guide }) => {
     links[id] = { href: localizedPath(locale, `/products/${id}`), label: title };
-    if (!primary.includes(id)) return { id, title, detail };
-    const models = (items[id] ?? []).map((name) => ({
-      name,
-      score: tokens.filter((token) => normalize(name).includes(token)).length,
-    })).sort((a, b) => b.score - a.score).slice(0, 12).map(({ name }) => name);
-    return { id, title, detail, examples, options: guide.options, brief: guide.brief, models, pdfModels: references[id] };
+    return { id, title, detail, examples, options: guide.options, brief: guide.brief, models: items[id], pdfModels: references[id] };
   });
 
   for (const example of portfolio) {

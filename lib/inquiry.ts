@@ -24,7 +24,7 @@ function response(status: number, error?: string) {
   });
 }
 
-async function readFields(request: Request): Promise<Record<string, unknown>> {
+export async function readFields(request: Request): Promise<Record<string, unknown>> {
   if (!request.body || Number(request.headers.get("content-length")) > bodyLimit) {
     throw new Error("Request too large");
   }
@@ -144,9 +144,7 @@ export async function handleInquiry(request: Request, settings: MailSettings) {
     return response(422, error instanceof Error ? error.message : "Please check the form and try again.");
   }
 
-  const { RESEND_API_KEY: key, FOLIA_INQUIRY_FROM: from } = settings;
-  const to = settings.FOLIA_INQUIRY_TO || studio.email;
-  if (!key || !from || !to) {
+  if (!canSendInquiry(settings)) {
     return response(503, "Online inquiries are currently unavailable. Please try again later.");
   }
 
@@ -155,17 +153,31 @@ export async function handleInquiry(request: Request, settings: MailSettings) {
   if (fields.mode === "chat" && (!origin || !validId)) {
     return response(400, "Please submit the chat inquiry from the Folia website.");
   }
-  const headers: Record<string, string> = { Authorization: `Bearer ${key}`, "Content-Type": "application/json" };
-  if (validId) {
-    headers["Idempotency-Key"] = `folia/${id}`;
-  }
-
   try {
     if (fields.mode === "chat" && settings.CHAT_RATE_LIMIT) {
       const ip = request.headers.get("cf-connecting-ip") ?? "unknown";
       const { success } = await settings.CHAT_RATE_LIMIT.limit({ key: `inquiry:${ip}` });
       if (!success) return response(429, "Please wait before trying again.");
     }
+    if (await sendInquiryEmail(settings, inquiry, validId ? id : undefined)) return response(200);
+  } catch {
+    // Keep the same request ID when retrying.
+  }
+  return response(502, "We couldn’t send your request. Please try again.");
+}
+
+export async function sendInquiryEmail(
+  settings: MailSettings,
+  inquiry: { email?: string; type: string; text: string },
+  id?: string,
+) {
+  const { RESEND_API_KEY: key, FOLIA_INQUIRY_FROM: from } = settings;
+  const to = settings.FOLIA_INQUIRY_TO || studio.email;
+  if (!key || !from || !to) return false;
+
+  const headers: Record<string, string> = { Authorization: `Bearer ${key}`, "Content-Type": "application/json" };
+  if (id) headers["Idempotency-Key"] = `folia/${id}`;
+  try {
     const sent = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers,
@@ -180,10 +192,10 @@ export async function handleInquiry(request: Request, settings: MailSettings) {
     });
     if (sent.ok) {
       const accepted = await sent.json() as { id?: unknown };
-      if (typeof accepted.id === "string" && accepted.id) return response(200);
+      if (typeof accepted.id === "string" && accepted.id) return true;
     }
   } catch {
     // A lost connection can occur after acceptance. The same request ID can be retried.
   }
-  return response(502, "We couldn’t send your request. Please try again.");
+  return false;
 }

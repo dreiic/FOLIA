@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import { chatCopy } from "../lib/chat/copy";
-import { chatHistoryLimit, chatInputLimit, type ChatMessage, type ChatReply } from "../lib/chat/types";
+import { chatHistoryLimit, chatIdleMs, chatInputLimit, chatWarningMs, type ChatMessage, type ChatReply } from "../lib/chat/types";
 import { emailUrl, whatsappUrl } from "../lib/content";
 import { localizedPath, type Locale } from "../lib/routing";
 import { Icon } from "./icons";
@@ -43,11 +43,15 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
-  const [inquiryAvailable, setInquiryAvailable] = useState(false);
-  const [inquiryOpen, setInquiryOpen] = useState(false);
-  const [inquiryStatus, setInquiryStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
-  const inquiryAttempt = useRef<{ body: string; id: string } | null>(null);
-  const sendingInquiry = useRef(false);
+  const [sessionId, setSessionId] = useState("");
+  const [sessionBusy, setSessionBusy] = useState(false);
+  const [sessionError, setSessionError] = useState("");
+  const [ended, setEnded] = useState<"confirmed" | "idle">();
+  const [idleWarning, setIdleWarning] = useState(false);
+  const [confirmEnd, setConfirmEnd] = useState(false);
+  const [activity, setActivity] = useState(0);
+  const startAttempt = useRef<{ contact: string; id: string } | null>(null);
+  const sessionRequest = useRef(false);
   const launcher = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const log = useRef<HTMLDivElement>(null);
@@ -69,7 +73,6 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
       .then((status) => {
         if (controller.signal.aborted) return;
         setAvailability(status?.available ? "available" : "unavailable");
-        setInquiryAvailable(status?.inquiryAvailable === true);
       })
       .catch(() => { if (!controller.signal.aborted) setAvailability("unavailable"); });
     return () => controller.abort();
@@ -78,7 +81,64 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
   useEffect(() => {
     const panelLog = log.current;
     if (panelLog) panelLog.scrollTop = panelLog.scrollHeight;
-  }, [panelOpen, turns, pending, error, inquiryOpen, inquiryStatus]);
+  }, [panelOpen, turns, pending, error, sessionError, ended, idleWarning, confirmEnd]);
+
+  useEffect(() => {
+    if (!sessionId || ended || pending) return;
+    const warning = window.setTimeout(() => setIdleWarning(true), chatWarningMs);
+    const expiry = window.setTimeout(() => setEnded("idle"), chatIdleMs);
+    return () => {
+      window.clearTimeout(warning);
+      window.clearTimeout(expiry);
+    };
+  }, [sessionId, ended, pending, activity]);
+
+  async function changeSession(action: "start" | "continue" | "finish", id: string, fields = {}) {
+    if (sessionRequest.current || inFlight.current) return;
+    sessionRequest.current = true;
+    setSessionBusy(true);
+    setSessionError("");
+    try {
+      const response = await fetch("/api/chat-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action, ...fields }),
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (response.status === 409 && action !== "start") {
+        setEnded("idle");
+        return;
+      }
+      if (!response.ok) {
+        if (response.status === 409) startAttempt.current = null;
+        setSessionError(response.status === 422 ? copy.invalidContact : copy.quoteFailed);
+        return;
+      }
+
+      setIdleWarning(false);
+      setConfirmEnd(false);
+      if (action === "finish") setEnded("confirmed");
+      if (action === "continue") setActivity((value) => value + 1);
+      if (action === "start") {
+        startAttempt.current = null;
+        setSessionId(id);
+      }
+    } catch {
+      setSessionError(copy.quoteFailed);
+    } finally {
+      sessionRequest.current = false;
+      setSessionBusy(false);
+    }
+  }
+
+  function startChat(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const fields = new FormData(event.currentTarget);
+    const contact = { name: String(fields.get("name")).trim(), phone: String(fields.get("phone")).trim() };
+    const key = JSON.stringify(contact);
+    if (startAttempt.current?.contact !== key) startAttempt.current = { contact: key, id: crypto.randomUUID() };
+    void changeSession("start", startAttempt.current.id, contact);
+  }
 
   function close() {
     setOpen(false);
@@ -92,7 +152,7 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
 
   async function send(raw: string) {
     const question = raw.trim();
-    if (!question || inFlight.current || sendingInquiry.current || availability !== "available") return;
+    if (!question || !sessionId || ended || inFlight.current || sessionRequest.current || availability !== "available") return;
     const controller = new AbortController();
     inFlight.current = controller;
     const previous = turns.filter((turn) => turn.answer).slice(-(chatHistoryLimit / 2 - 1));
@@ -101,17 +161,20 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
       { role: "assistant", content: answer!.reply },
     ]);
     setError("");
+    setIdleWarning(false);
+    setConfirmEnd(false);
     setDraft("");
     setPending(true);
     setTurns([...turns, { question }]);
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-Folia-Chat-Session": sessionId },
         body: JSON.stringify({ locale, previousBrief: brief, messages: [...history, { role: "user", content: question }] }),
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(25_000)]),
       });
       if (!response.ok) {
+        if (response.status === 409) setEnded("idle");
         setError(response.status === 429 ? copy.limited : copy.failed);
         setDraft(question);
         setTurns(turns);
@@ -119,7 +182,7 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
       }
       const answer: ChatReply = await response.json();
       setTurns([...turns, { question, answer }]);
-      if (answer.handoff) setInquiryOpen(true);
+      setConfirmEnd(answer.handoff);
     } catch {
       if (controller.signal.aborted) return;
       setError(copy.failed);
@@ -138,34 +201,7 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
 
   const brief = turns.findLast((turn) => turn.answer?.brief)?.answer?.brief;
   const inquiry = brief ? `${copy.quote}\n\n${brief}` : copy.quote;
-  const disabled = availability !== "available" || pending || inquiryStatus === "sending";
-  const showInquiry = inquiryAvailable && (inquiryOpen || turns.at(-1)?.answer?.handoff);
-
-  async function submitInquiry(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (sendingInquiry.current || inquiryStatus === "sent" || !brief) return;
-
-    const fields = new FormData(event.currentTarget);
-    const body = JSON.stringify({ mode: "chat", name: fields.get("name"), phone: fields.get("phone"), summary: brief });
-    if (inquiryAttempt.current?.body !== body) inquiryAttempt.current = { body, id: crypto.randomUUID() };
-    sendingInquiry.current = true;
-    setInquiryStatus("sending");
-    try {
-      const response = await fetch("/api/inquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": inquiryAttempt.current.id },
-        body,
-        signal: AbortSignal.timeout(15_000),
-      });
-      const result = response.ok ? await response.json() : null;
-      if (result?.ok === true) inquiryAttempt.current = null;
-      setInquiryStatus(result?.ok === true ? "sent" : "failed");
-    } catch {
-      setInquiryStatus("failed");
-    } finally {
-      sendingInquiry.current = false;
-    }
-  }
+  const disabled = availability !== "available" || pending || sessionBusy || Boolean(ended);
 
   if (!visible) return null;
 
@@ -183,7 +219,15 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
             <p className="folia-chat-bubble">{copy.welcome}</p>
             {availability === "checking" && <p className="folia-chat-status">{copy.checking}</p>}
             {availability === "unavailable" && <p className="folia-chat-status">{copy.unavailable}</p>}
-            {availability === "available" && !turns.length && (
+            {availability === "available" && !sessionId && (
+              <form className="folia-chat-handoff folia-chat-inquiry" onSubmit={startChat}>
+                <p>{copy.startNotice}</p>
+                <label>{copy.quoteName}<input name="name" autoComplete="name" required maxLength={120} disabled={sessionBusy} /></label>
+                <label>{copy.quotePhone}<input name="phone" type="tel" autoComplete="tel" required minLength={7} maxLength={32} disabled={sessionBusy} /></label>
+                <button type="submit" className="button button-primary" disabled={sessionBusy}>{copy.startChat}</button>
+              </form>
+            )}
+            {sessionId && !ended && !turns.length && (
               <div className="folia-chat-suggestions">
                 {copy.suggestions.map((suggestion) => <button key={suggestion} type="button" onClick={() => void send(suggestion)}>{suggestion}</button>)}
               </div>
@@ -194,14 +238,6 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
                 {answer && (
                   <div className="folia-chat-answer">
                     <p className="folia-chat-bubble">{answer.reply}</p>
-                    {answer.handoff && !inquiryAvailable && (
-                      <div className="folia-chat-handoff">
-                        <a className="button button-primary" href={emailUrl(copy.subject, inquiry)}>
-                          <Icon name="mail" width="17" height="17" />{copy.handoffEmail}
-                        </a>
-                        <p>{copy.handoffNote}</p>
-                      </div>
-                    )}
                     {answer.links.length > 0 && (
                       <div className="folia-chat-links">
                         {answer.links.map(({ href, label }) => <Link key={href} href={href} className="text-link" onClick={close}>{label} <Icon name="arrow" width="15" height="15" /></Link>)}
@@ -213,30 +249,32 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
             ))}
             {pending && <p className="folia-chat-status">{copy.thinking}</p>}
             {error && <p className="folia-chat-status" role="alert">{error}</p>}
-            {inquiryStatus === "sent" && <p className="folia-chat-bubble" role="status">{copy.quoteSent}</p>}
-            {brief && showInquiry && inquiryStatus !== "sent" && (
-              <form className="folia-chat-handoff folia-chat-inquiry" onSubmit={submitInquiry}>
-                <p>{copy.quoteContactNote}</p>
-                <label>{copy.quoteName}<input name="name" autoComplete="name" required maxLength={120} disabled={inquiryStatus === "sending"} /></label>
-                <label>{copy.quotePhone}<input name="phone" type="tel" autoComplete="tel" required minLength={7} maxLength={32} disabled={inquiryStatus === "sending"} /></label>
-                <button type="submit" className="button button-primary" disabled={pending || inquiryStatus === "sending"}>
-                  <Icon name="mail" width="17" height="17" />{inquiryStatus === "sending" ? copy.quoteSending : copy.quoteSend}
-                </button>
-                {inquiryStatus === "failed" && <p role="alert">{copy.quoteFailed}</p>}
-              </form>
+            {sessionError && <p className="folia-chat-status" role="alert">{sessionError}</p>}
+            {ended && <p className="folia-chat-bubble" role="status">{ended === "confirmed" ? copy.quoteSent : copy.idleEnded}</p>}
+            {!ended && idleWarning && (
+              <div className="folia-chat-handoff">
+                <p className="folia-chat-bubble" role="status">{copy.stillThere}</p>
+                <button className="button button-primary" type="button" disabled={sessionBusy} onClick={() => void changeSession("continue", sessionId)}>{copy.keepChatting}</button>
+              </div>
+            )}
+            {!ended && !idleWarning && confirmEnd && (
+              <div className="folia-chat-handoff">
+                <p className="folia-chat-bubble">{copy.confirmHandoff}</p>
+                <div className="folia-chat-contact">
+                  <button className="button button-primary" type="button" disabled={sessionBusy} onClick={() => void changeSession("finish", sessionId)}>{copy.yes}</button>
+                  <button className="text-link" type="button" disabled={sessionBusy} onClick={() => void changeSession("continue", sessionId)}>{copy.no}</button>
+                </div>
+              </div>
             )}
           </div>
           <div className="folia-chat-controls">
-            {availability !== "unavailable" && (
+            {sessionId && !ended && (
               <form onSubmit={submit} className="folia-chat-form">
                 <input aria-label={copy.input} placeholder={copy.input} value={draft} maxLength={chatInputLimit} onChange={(event) => setDraft(event.target.value)} disabled={disabled} />
                 <button className="button button-primary" type="submit" aria-label={copy.send} disabled={disabled || !draft.trim()}><Icon name="arrow" width="18" height="18" /></button>
               </form>
             )}
             <div className="folia-chat-contact">
-              {brief && inquiryAvailable && !showInquiry && inquiryStatus !== "sent" && (
-                <button type="button" className="text-link" onClick={() => setInquiryOpen(true)}>{copy.quoteStart}</button>
-              )}
               <a href={whatsappUrl(inquiry)} className="text-link" target="_blank" rel="noreferrer"><Icon name="whatsapp" width="17" height="17" />{brief ? copy.withBrief : copy.whatsapp}</a>
               <a href={emailUrl(copy.subject, inquiry)} className="text-link"><Icon name="mail" width="17" height="17" />{copy.email}</a>
             </div>

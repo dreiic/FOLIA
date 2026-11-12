@@ -32,13 +32,13 @@ The supplied wordmark is retained as a transparent mask in `public/editorial/fol
 
 For the `folia` Worker in Cloudflare Workers Builds, use the repository root and `npx wrangler deploy` as the deploy command. The separate build command can be left blank because Wrangler runs `npm run build:sites` from `wrangler.jsonc`. Set `NEXT_PUBLIC_FOLIA_SITE_URL` to the production URL in the build environment for canonical links.
 
-The chat inquiry form uses `POST /api/inquiry` to send the customer's name, phone number and project summary to Folia through Resend. Set `RESEND_API_KEY` as a Worker secret and `FOLIA_INQUIRY_FROM` to an address on a verified sending domain. `FOLIA_INQUIRY_TO` overrides the studio email if needed.
+The chat collects the customer's name and phone before the first message. The `CHAT_SESSIONS` Durable Object schedules a contact email at registration and a second email with the summary and visitor messages at confirmation or after 65 seconds of inactivity. The worker retains delivery data until Resend accepts the emails. Set `RESEND_API_KEY` as a Worker secret and `FOLIA_INQUIRY_FROM` to an address on a verified sending domain. `FOLIA_INQUIRY_TO` overrides the studio email if needed.
 
 ## Folia assistant
 
 Set the encrypted `ANTHROPIC_API_KEY` secret on the production `folia` Cloudflare Worker. Use a key scoped to one Claude workspace, or set `ANTHROPIC_WORKSPACE_ID` with the selected workspace ID. The optional `FOLIA_CHAT_MODEL` variable overrides the default Claude Haiku model. For local Next.js development, use an ignored `.env.local`; for local Wrangler development, use an ignored `.env.local` or supply the secret as a runtime environment variable.
 
-The assistant uses the Folia collection guides, catalogue models and portfolio. Update `lib/chat/catalog-reference.json` when the PDF model codes change. The Worker limits requests, keeps the provider key server-side, and stores no chat history. Visitors can choose to send a prepared inquiry through WhatsApp or email. The widget offers both contact links when chat is unavailable.
+The assistant uses the full Folia collection guides, catalogue models, services and portfolio. Update `lib/chat/catalog-reference.json` when the PDF model codes change. The Worker limits requests and keeps provider keys and contact form details separate from the Claude request. Use `wrangler dev` to test the chat session binding locally. The widget offers direct contact links when chat is unavailable.
 
 ## Parallax hero
 
