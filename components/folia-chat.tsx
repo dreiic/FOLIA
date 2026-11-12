@@ -170,7 +170,12 @@ export function FoliaChat({ locale, waitForHero }: { locale: Locale; waitForHero
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json", "X-Folia-Chat-Session": sessionId },
-        body: JSON.stringify({ locale, previousBrief: brief, messages: [...history, { role: "user", content: question }] }),
+        body: JSON.stringify({
+          locale,
+          previousBrief: brief,
+          handoffShown: turns.some((turn) => turn.answer?.handoff),
+          messages: [...history, { role: "user", content: question }],
+        }),
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(25_000)]),
       });
       if (!response.ok) {
