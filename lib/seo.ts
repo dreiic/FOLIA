@@ -31,7 +31,7 @@ export function alternatePageUrls(path: string) {
 export const montenegroSearchCopy: Record<string, [string, string]> = {
   "/": [
     "Jelovnici i oprema za ugostiteljstvo u Crnoj Gori",
-    "Folia iz Podgorice izrađuje jelovnike po narudžbi, korice sa logotipom i QR menije za restorane, hotele i kafiće širom Crne Gore.",
+    "Folia Design iz Podgorice izrađuje jelovnike po narudžbi, korice sa logotipom i QR menije za restorane, hotele i kafiće širom Crne Gore.",
   ],
   "/products": [
     "Oprema za restorane, hotele i kafiće u Crnoj Gori",
