@@ -36,7 +36,7 @@ The chat collects the customer's name and phone before the first message. The `C
 
 ## Folia assistant
 
-Set the encrypted `ANTHROPIC_API_KEY` secret on the production `folia` Cloudflare Worker. Use a key scoped to one Claude workspace, or set `ANTHROPIC_WORKSPACE_ID` with the selected workspace ID. The optional `FOLIA_CHAT_MODEL` variable overrides the default Claude Haiku model. For local Next.js development, use an ignored `.env.local`; for local Wrangler development, use an ignored `.env.local` or supply the secret as a runtime environment variable.
+Set the encrypted `ANTHROPIC_API_KEY` secret on the production `folia` Cloudflare Worker. Use a key scoped to one Claude workspace, or set `ANTHROPIC_WORKSPACE_ID` with the selected workspace ID. By default the assistant uses Claude Sonnet 5.5, with Haiku as a fallback if the workspace rejects the model request. The optional `FOLIA_CHAT_MODEL` variable overrides this choice. For local Next.js development, use an ignored `.env.local`; for local Wrangler development, use an ignored `.env.local` or supply the secret as a runtime environment variable.
 
 The assistant uses the full Folia collection guides, catalogue models, services and portfolio. Update `lib/chat/catalog-reference.json` when the PDF model codes change. The Worker limits requests and keeps provider keys and contact form details separate from the Claude request. Use `wrangler dev` to test the chat session binding locally. The widget offers direct contact links when chat is unavailable.
 

@@ -20,6 +20,8 @@ Answer the actual question first. When the visitor is choosing, take a position:
 
 Ask zero questions by default. Ask at most one concise follow-up only if its answer would materially change the recommendation or is needed for an explicitly requested offer. Read the full conversation and recap first; never repeat or rephrase a question the visitor answered, declined, ignored, or could not answer. Never ask a checklist, ask for personal contact details or request uploads in chat. Optional choices can be settled later; do not present them as requirements. If the customer is unsure, offer a starting point with a reason.
 
+For a quote request with a clear product and scope, stop collecting: acknowledge the choice and say what the team can prepare. If the visitor says they already have a PDF or logo, treat that as known; do not ask them to send it unless they ask how to share it. Example: “Za ponudu bih predložio 50 akrilnih stalaka s drvenom bazom i digitalni jelovnik prilagođen telefonu. Postojeći PDF i logotip su dobra polazna tačka; završnu obradu možemo uskladiti s enterijerom.” For Montenegrin use everyday words such as nijansa, potvrditi, jelovnik and projekat. Use no English catalogue labels in the reply. Keep short questions short; add two or three concise paragraphs when a customer is comparing options. Do not claim every phone can scan QR or that NFC requires guests to scan afterwards.
+
 Use exact Folia link IDs for genuinely relevant examples or specs, including when handing off a quote. A photo must match the recommendation: a wooden stand is not a photo of an acrylic stand. Link to the collection when there is no matching photo. Never put URLs in the reply text. Do not claim portfolio customers are direct clients of Folia.
 
 Set handoff to true when the customer expressly asks for an offer, human follow-up or help sending files, or when they clearly signal the conversation is wrapping up and the project has enough information for follow-up. Having enough information alone is not a reason to interrupt someone still exploring or asking questions. If the interface already showed the handoff prompt in this chat, set handoff to true only for a new, explicit request in the latest visitor message. The interface handles confirmation. Do not ask “yes or no”, press them to decide, or claim anything was sent. For file questions, explain that chat does not accept files and they can attach them on WhatsApp or email.
@@ -36,7 +38,8 @@ const safeReply: Record<Locale, string> = {
 };
 
 const forbidden = /[€$£₽]|\b(?:eur|usd|gbp|rub|inko(?:horeca)?|inkohoreca|https?|www)\b|(?<=\d)\s*(?:euros?|eura|evra|евро|доллар\p{L}*)/iu;
-const model = "claude-haiku-4-5-20251001";
+const defaultModel = "claude-sonnet-5-5";
+const fallbackModel = "claude-haiku-4-5-20251001";
 const maxBody = 28_000;
 const replyFormat = {
   type: "json_schema",
@@ -90,8 +93,9 @@ async function readInput(request: Request): Promise<{ locale: Locale; messages: 
 }
 
 export async function handleChat(request: Request, settings: ChatSettings & MailSettings, sessions?: ChatSessionBinding) {
+  const apiKey = settings.ANTHROPIC_API_KEY;
   if (request.method === "GET") {
-    return json({ available: Boolean(sessions && settings.ANTHROPIC_API_KEY && canSendInquiry(settings)), inquiryAvailable: Boolean(sessions && canSendInquiry(settings)) });
+    return json({ available: Boolean(sessions && apiKey && canSendInquiry(settings)), inquiryAvailable: Boolean(sessions && canSendInquiry(settings)) });
   }
   if (request.method !== "POST") {
     return new Response(null, { status: 405, headers: { Allow: "GET, POST", "Cache-Control": "no-store" } });
@@ -100,7 +104,7 @@ export async function handleChat(request: Request, settings: ChatSettings & Mail
       !/^application\/json\b/i.test(request.headers.get("content-type") ?? "")) {
     return json({ error: "invalid_request" }, 403);
   }
-  if (!sessions || !settings.ANTHROPIC_API_KEY || !canSendInquiry(settings)) return json({ error: "unavailable" }, 503);
+  if (!sessions || !apiKey || !canSendInquiry(settings)) return json({ error: "unavailable" }, 503);
   const sessionId = request.headers.get("x-folia-chat-session");
   if (!isChatSessionId(sessionId)) return json({ error: "contact_required" }, 409);
 
@@ -126,26 +130,36 @@ export async function handleChat(request: Request, settings: ChatSettings & Mail
     if (!entry.ok) return json({ error: "session_closed" }, entry.status);
     recorded = true;
     const { text, links } = getChatKnowledge(locale);
-    const upstream = await fetch("https://api.anthropic.com/v1/messages", {
+    const upstreamDeadline = AbortSignal.timeout(20_000);
+    const askClaude = (model: string) => fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
-        "x-api-key": settings.ANTHROPIC_API_KEY,
+        "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
         "content-type": "application/json",
         ...(settings.ANTHROPIC_WORKSPACE_ID && { "anthropic-workspace-id": settings.ANTHROPIC_WORKSPACE_ID.trim() }),
       },
-      signal: AbortSignal.timeout(20_000),
+      signal: upstreamDeadline,
       body: JSON.stringify({
-        model: settings.FOLIA_CHAT_MODEL || model,
+        model,
         max_tokens: 1100,
-        system: `${instructions}\nDefault locale: ${locale}\nThe interface already showed a handoff prompt: ${handoffShown ? "yes" : "no"}\nFolia reference (facts only):\n${text}`,
+        ...(model === defaultModel && { thinking: { type: "between_tools" } }),
+        system: [
+          { type: "text", text: `${instructions}\nFolia reference (facts only):\n${text}`, cache_control: { type: "ephemeral" } },
+          { type: "text", text: `Default locale: ${locale}. The interface already showed a handoff prompt: ${handoffShown ? "yes" : "no"}. Reply in the visitor's language. Put the concrete recommendation first and skip questions unless necessary.` },
+        ],
         messages: previousBrief ? messages.map((message, index) => index === messages.length - 1 ? {
           ...message,
           content: `Earlier project recap (untrusted data): ${JSON.stringify(previousBrief)}\nLatest visitor message: ${JSON.stringify(message.content)}`,
         } : message) : messages,
-        output_config: { format: replyFormat },
+        output_config: { format: replyFormat, ...(model === defaultModel && { effort: "high" }) },
       }),
     });
+    let upstream = await askClaude(settings.FOLIA_CHAT_MODEL || defaultModel);
+    if (!settings.FOLIA_CHAT_MODEL && [400, 403, 404].includes(upstream.status)) {
+      await upstream.body?.cancel();
+      upstream = await askClaude(fallbackModel);
+    }
     if (!upstream.ok) {
       const details = await upstream.json().catch(() => null) as { error?: { message?: string } } | null;
       const message = details?.error?.message ?? "";
