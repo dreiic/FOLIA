@@ -32,7 +32,7 @@ The supplied wordmark is retained as a transparent mask in `public/editorial/fol
 
 For the `folia` Worker in Cloudflare Workers Builds, use the repository root and `npx wrangler deploy` as the deploy command. The separate build command can be left blank because Wrangler runs `npm run build:sites` from `wrangler.jsonc`. Set `NEXT_PUBLIC_FOLIA_SITE_URL` to the production URL in the build environment for canonical links.
 
-The chat collects the customer's name and phone before the first message. The `CHAT_SESSIONS` Durable Object schedules a contact email at registration and a second email with the summary and visitor messages at confirmation or after 65 seconds of inactivity. The worker retains delivery data until Resend accepts the emails. Set `RESEND_API_KEY` as a Worker secret and `FOLIA_INQUIRY_FROM` to an address on a verified sending domain. `FOLIA_INQUIRY_TO` overrides the studio email if needed.
+The chat collects the customer's name and phone before the first message. The `CHAT_SESSIONS` Durable Object schedules a contact email at registration and a second email with the summary and visitor messages at confirmation or after 65 seconds of inactivity. The worker retains delivery data until Resend accepts the emails. Set `RESEND_API_KEY` as a Worker secret and `FOLIA_INQUIRY_FROM` to an address on a verified sending domain. `FOLIA_INQUIRY_TO` overrides the automated delivery address, which defaults to `office.folia@gmail.com`. The site's public email links use `NEXT_PUBLIC_FOLIA_EMAIL` independently.
 
 ## Folia assistant
 

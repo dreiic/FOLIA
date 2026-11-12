@@ -1,4 +1,4 @@
-import { collections, inquiryTypes, studio } from "./content";
+import { collections, inquiryTypes } from "./content";
 import { chatBriefLimit } from "./chat/types";
 
 export interface MailSettings {
@@ -16,6 +16,7 @@ export function canSendInquiry(settings: MailSettings) {
 const productLabels = new Map(collections.map(({ id, title }) => [id, title]));
 const emailPattern = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 const bodyLimit = 18_000;
+const defaultInquiryRecipient = "office.folia@gmail.com";
 
 function response(status: number, error?: string) {
   return Response.json(error ? { ok: false, error } : { ok: true }, {
@@ -172,7 +173,7 @@ export async function sendInquiryEmail(
   id?: string,
 ) {
   const { RESEND_API_KEY: key, FOLIA_INQUIRY_FROM: from } = settings;
-  const to = settings.FOLIA_INQUIRY_TO || studio.email;
+  const to = settings.FOLIA_INQUIRY_TO || defaultInquiryRecipient;
   if (!key || !from || !to) return false;
 
   const headers: Record<string, string> = { Authorization: `Bearer ${key}`, "Content-Type": "application/json" };

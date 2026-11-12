@@ -1,5 +1,5 @@
 export const studio = {
-  email: process.env.NEXT_PUBLIC_FOLIA_EMAIL || "office.folia@gmail.com",
+  email: process.env.NEXT_PUBLIC_FOLIA_EMAIL || "office@foliadesign.me",
   instagram: process.env.NEXT_PUBLIC_FOLIA_INSTAGRAM_URL || "https://www.instagram.com/folia.me/",
   location: "Podgorica, Montenegro",
   whatsapp: "https://wa.me/38269990978",
